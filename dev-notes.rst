@@ -7,7 +7,14 @@ A note to the public - if anyone happens across this project.
 
 I am currently working as a TSE for Ivanti, supporting the product 'Ivanti Security Controls' (often referrd to simply as ISEC), and Gary is a former colleague who has moved on, but as chance has it, is now a customer of Ivanti's (and he will be responsible in his company for the operation of the product)
 
-As we are both keen to improve our programming experience (and Python is the best language, sorry not sorry), we thought a joint project to wrap the ISEC REST API would be a good first collaborative project for us both. This will provide the benefits of having both Ivanti Support and customer points of view, which will hopefully inspire a useful product which could be used by other 
+As we are both keen to improve our programming experience (and Python is the best language, sorry not sorry), we thought a joint project to wrap the ISEC REST API would be a good first collaborative project for us both. This will provide the benefits of having both Ivanti Support and customer points of view, which will hopefully inspire a useful product which could be used by other users of ISEC.
+
+**DISCLAIMER**
+It is important to note that while I am an employee of Ivanti, this project is by no means affiliated with Ivanti (the company) in any way. It is solely an open source project, worked on in a voluntary capacity by the core contributers, outside of employed working hours. This project is not endoursed, sponsored or paid for in any way by Ivanti.
+It is an opinionated implementation of the ISEC REST API and has no direct conenction to the developers of ISEC itself.
+We cannot guarantee this project will cause no damage to a production system and this module should only ever be used by professionals capable of understanding the code. It is advised to perform extensive testing prior to implementing any code which makes use of this module.
+
+
 
 Useful Links and references
 ***************************
