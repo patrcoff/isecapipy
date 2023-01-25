@@ -7,7 +7,7 @@ A place for the devs to discuss project plans
 Useful Links and references
 ***************************
 
-====    ===========     ====
+====    ===========     ======================
 Name    Description     Link
-----    -----------     ----
+----    -----------     ----------------------
 First   Last            https://www.google.com
