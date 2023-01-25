@@ -3,11 +3,96 @@ A place for the devs to discuss project plans
 
 (That of course means me and Gary at the time of writing.)
 
+A note to the public - if anyone happens across this project.
+
+I am currently working as a TSE for Ivanti, supporting the product 'Ivanti Security Controls' (often referrd to simply as ISEC), and Gary is a former colleague who has moved on, but as chance has it, is now a customer of Ivanti's (and he will be responsible in his company for the operation of the product)
+
+As we are both keen to improve our programming experience (and Python is the best language, sorry not sorry), we thought a joint project to wrap the ISEC REST API would be a good first collaborative project for us both. This will provide the benefits of having both Ivanti Support and customer points of view, which will hopefully inspire a useful product which could be used by other 
 
 Useful Links and references
 ***************************
 
-====    ===========     ======================
-Name    Description     Link
-----    -----------     ----------------------
-First   Last            https://www.google.com
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Name                            |    Description                                                                     |  Link                                                                                                      |
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Python REST API Wrapper Tutorial|  An in depth guide on how to plan and implement a python wrapper for a REST API    | https://www.pretzellogix.net/2021/12/08/step-1-read-the-docs-and-use-postman-to-understand-the-rest-api/   |
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Collaborating on github         |  Youtube video outlining basic workflows to collaborate on github                  | https://youtu.be/HbSjyU2vf6Y                                                                               |
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| RestructuredText references     |  A decent resource for RestructuredText syntax (like what this is written in)      | https://docutils.sourceforge.io/docs/user/rst/quickref.html#section-structure                              |
+|                                 +------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+|                                 |  A second resource which is specific to a certain platform but is still useful     | https://sublime-and-sphinx-guide.readthedocs.io/en/latest/indices.html                                     |
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+|Good intermediate -> advanced    |  Al Sweigart is one of the best Python educators, catering to a wide range of      | https://youtu.be/VihLgySA6wU                                                                               |
+|Python resources                 |  abilities and he communicates very well. He has several books, all available for  | https://inventwithpython.com/                                                                              |
+|                                 |  free and some youtube courses based on his books.                                 |                                                                                                            |
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+|Understanding python import      | How a module can be imported depends on a few different things, such as where the  | https://youtu.be/v6tALyc4C10                                                                               |
+|sttatement and packaging modules.| module is installed, or if it simply exists in the current directory etc.          |                                                                                                            |
+|                                 | All of this is explained well by this realpython code conversation video.          |                                                                                                            |
++---------------------------------+------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
+How to use this file
+********************
+
+First, it would be a good idea to get a little understanding of how RestructuredText works and research some tools which can be used to parse/view RestructuredText.
+
+RestructuredText is a markup language (like HTML but nicer) which is designed to be readable both in it's raw form, but be parsable by various tools to be displayed nicely in a viewer or web browser.
+
+For example, you can generate static websites using a static site generator (SSG) such as the python 3rd party module pelican - which will take in rst files and output themed HTML
+
+Github itself will automatically attempt to parse files ending with the .rst extension when viewed on github.com in the browser. That is why I have chosen this format for this document.
+
+However, the syntax does need to be followed, for example it is very easy to break the table above by ommiting one of the boarder characters. This will result in the unparsable component not showing on github.com unless you view the raw text.
+
+Therefore, if you make any changes to any of the rst files in this project, you should verify they are parsable before committing to github. I'm sure there are some simple tools to validate via a quick commandline command but if like me you also want to
+see the formatted text to confirm it looks like you expect (as I am also learning the syntax myself), then a live viewer tool would be better.
+
+I am using the python module "restview" - https://pypi.org/project/restview/
+
+You can pip or pipx install it into your environment or virtual environment and use it to dynamically preview the file in the browser.
+
+Once installed, you simply call "restview [filename.rst]" from the commandline (or "py -m restview [filename.rst]" if you have issues modifying your PATH evnironment variables on a system you don't fully control) and it will open a live preview in the browser.
+
+When you make changes to the file it will auto refresh. It also will highlight errors in the text with really useful messaging to fix them.
+
+-----
+
+Tips:
+
+- Any useful resources you find, remember to add them to the table in the first section (also, please keep this reference table as the top section of this file)
+- Remember to always preview your edits using a tool such as restview prior to comitting
+- Can't think of any off the top of my head right now but I'm sure I'll think of more. If you've any questions and your name is Gary, just shoot me a message. Else: google it, lol.
+
+-----
+
+Project structure explanation
+*****************************
+
+- The top level dir "isecapipy" is the "project folder" which contains both the code, packaging tools, info for devs and metadata
+- "src" is where the main code will live (core project code inside src/isecapipy). I understand this may look a little confusing at first but it is a fairly common structure used on collaborative projects and projects designed to be packaged (which is ultimately my plan)
+- Why would we package it? Ivanti customers are not going to want to just clone the repo, this adds a few too many hurdles creating a barrier of entry. A pip installable package makes life much easier for the end user.
+- to begin with, I propose we perform some initial testing and proof of concepts in the folder src/planning in order to keep this code separate from the actual project
+- pyproject.toml is used for making the module installable via pip locally from the source code (see link in table for 'understanding python import statement...') (and later for creating a package we can upload to pypi so it can be pip installable anywhere)
+- Inside src/isecapipy/__main__.py will be the main entry point to the module - this is a common convention for python applications and although not necessary for modules if they are to be solely imported into other python code, it will allow us to add a commandline usage of the module. For example, a "test-connection" command to confirm the API can be reached or some one-liner tasks like "patch x_machinegroup" etc
+
+-----
+
+Below this point is not yet formatted nicely, just taking some notes for now as I think of them but will organise better later on!
+
+-----
+
+useful dev workflows, commands, tools etc
+
+
+
+    py -m venv venv --prompt isecapi 
+
+    venv/source/activate
+
+    restview - python module for viewing restructured text (rst files) so you can preview on the fly before commiting changes to this file
+
+
+-----
+
+another section (doc may not end with a transition)
