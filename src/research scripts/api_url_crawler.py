@@ -32,11 +32,11 @@ for endpoint_url in endpoints:
             for el in endpoint_base_url.split():
                 output.append(el.strip())
         else:
-            output.append(endpoint_base_url)
+            output.append(endpoint_base_url.strip())
     except AttributeError:
         print("attempted item endpoint_url")
 
 with open('base_urls.txt','w+') as f:
     for url in output:
-        print(url.strip())
-        f.write(f'{url.strip()}\n')
+        print(url)
+        f.write(f'{url}\n')
