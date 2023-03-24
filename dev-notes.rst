@@ -108,4 +108,7 @@ useful dev workflows, commands, tools etc
 
 -----
 
-another section (doc may not end with a transition)
+Desirable features
+==================
+
+- Simple interface for automating/scheduling the reassignments of agent policies
