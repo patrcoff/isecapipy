@@ -37,6 +37,6 @@ for endpoint_url in endpoints:
         print("attempted item endpoint_url")
 
 with open('base_urls.txt','w+') as f:
-    for url in output:
+    for url in sorted(output,key=lambda x: x.split('v1.0/')[-1]):
         print(url)
         f.write(f'{url}\n')
