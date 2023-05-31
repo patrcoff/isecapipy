@@ -1,7 +1,7 @@
 Ivanti Security Controls REST API reference sheet.
 ==================================================
 
-Here, we shall document a simpler reference sheet for the Ivanti API than currently exists within the Ivanti help docs (IMO the API help docs are a little convoluted and not adhering to more modern API documentation standards)
+Here, we shall document a simpler reference sheet for the Ivanti API than currently exists within the Ivanti help docs.
 
 -----
 
@@ -75,3 +75,19 @@ BaseURLs
 +----------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                      |                                                                                                                                           | 
 +----------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
+
+|
+|
+
+------
+
+Agents
+------
+
+This endpoint fascilitates:
+
+- Delete an agent from a machine
+- Query for information about current agent installations
+- Assign a different policy to an agent
+
+

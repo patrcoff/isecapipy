@@ -41,7 +41,7 @@ Useful Links and references
 |                                 |  some youtube courses based on his books.            |                              |                                                                                                            |
 +---------------------------------+------------------------------------------------------+------------------------------+------------------------------------------------------------------------------------------------------------+
 |Understanding python import      | How a module can be imported depends on a few different things, such as where the   | https://youtu.be/v6tALyc4C10                                                                               |
-|sttatement and packaging modules.| module is installed, or if it simply exists in the current directory etc.           |                                                                                                            |
+|statement and packaging modules.| module is installed, or if it simply exists in the current directory etc.           |                                                                                                            |
 |                                 | All of this is explained well by this realpython code conversation video.           |                                                                                                            |
 +---------------------------------+-------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
@@ -75,7 +75,7 @@ Tips:
 
 - Any useful resources you find, remember to add them to the table in the first section (also, please keep this reference table as the top section of this file)
 - Remember to always preview your edits using a tool such as restview prior to comitting
-- Can't think of any off the top of my head right now but I'm sure I'll think of more. If you've any questions and your name is Gary, just shoot me a message. Else: google it, lol.
+- Can't think of any off the top of my head right now but I'm sure I'll think of more. If you've any questions and your name is in ['Gary', 'Emmannuel'], just shoot me a message. Else: google it, lol.
 
 -----
 
@@ -108,7 +108,23 @@ useful dev workflows, commands, tools etc
 
 -----
 
-Desirable features
-==================
+Stage One Plan
+==============
 
+The core deliverable initially is to simply make a 1-1 mapping of the ISEC api endpoints in a python module wrapper complete with parameters, json body field mappings and accepted request methods for each API endpoint.
+This should also contain tests (within the module but not the type of tests which would run pre-commit when we get to that stage of CI/CD) which verify the current version of the wrapper is not behind the current version of ISEC in terms of available 
+Initial plan is to support the latest version of the console's API at any point in time, backword compatability work will be handled in a later stage
+
+
+Desirable features for future stages
+====================================
+
+- Implement commonly requested Workflows, examples below
+    - Patch to zero feature (if this isn't included for Windows in 2023.3)
+    - Trigger patch scan of x machine group based on y scan template 
+- Implement automations of existing GUI workflows which currently need to be performed manually, examples below
+    - Generate patch group based on 'smart filter' type logic.
+    - Return list of machine objects based on 'smart filter logic'
+    - ...
 - Simple interface for automating/scheduling the reassignments of agent policies
+- Local SQLite db of console config for quick referencing without using API - to be synced periodically or prior to specific tasks
