@@ -1,4 +1,7 @@
-
+def placeholder():
+    """This is a placeholder function to test importing structure"""
+    
+    pass
 
 urls = {
     'AGENTS': {
