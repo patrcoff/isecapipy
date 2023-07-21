@@ -1,3 +1,5 @@
+""" A placeholder docstring"""
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -9,7 +11,7 @@ page = requests.get(BASE_URL + "Welcome.htm")
 
 soup = BeautifulSoup(page.content, "html.parser")
 
-links = [x for x in soup.find_all("a")]
+links = list(soup.find_all('a'))
 
 endpoints = []
 
@@ -26,7 +28,7 @@ for endpoint_url in endpoints:
         #print(url)
         page = requests.get(url)
         soup = BeautifulSoup(page.content, "html.parser")
-        endpoint_base_url = soup.find('pre', {'class': 'prettyprint'}).text#.find('span', {'class':'com'})
+        endpoint_base_url = soup.find('pre', {'class': 'prettyprint'}).text
         #print(endpoint_base_url)
         if "\n" in endpoint_base_url:
             for el in endpoint_base_url.split():
