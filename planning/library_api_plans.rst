@@ -5,17 +5,31 @@ This document outlines the very early stage plans for how the library's API shou
 ###################################################################################################################################
 
 |
-|
+
+Firstly, I'd like to note how painfully aware I am of the potential for confusion between the terms API and REST API!
+In this document, and the wider project more generally, I aim to diligently use the two terms consistently when talking about their respective meanings.
+
+Where the two terms are referenced, please note their brief summary descriptions below for contextual understanding:
+
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| API       | This refers to the user interface API of the library itself, as in how developers using the library would be expected to do so.                                  |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| REST API  | This refers to the actual calls or endpoints of the REST API of the ISEC console itself.                                                                         |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Endpoint  | This can also have two meanings but should be obvious from context. It can either mean a REST API endpoint (an individual uri available from the ISEC REST API)  |
+|           | Or it could mean a physical or virtual hardware target such as a PC or Server, which is to be patched or otherwise managed via the API                           |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
 |
 
 The basic usage of the library as I currently envision it is separated into the following sections:
 
-- ISEC REST API references (built in documentation re-presenting the Ivanti documentation for Python users)
-- ISEC REST API endpoint mappings - what non Python people call a hash table effectively
-- A simple wrapper for each of the REST API's endpoints
+- ISEC REST API references (built in documentation re-presenting the Ivanti documentation for Python users).
+- ISEC REST API endpoint mappings - effectively what non Python people call a hash table and 1-1 function mappings to each of the endpoints' URIs as well as a function to generate the URIs.
+- Simpler and higher level wrappers for each of the REST API's endpoint groups.
 - Dataclasses for the endpoint JSON request bodies and responses.
-- A simple query schema for ISEC data structures, processes and commands
-- Higher level workflow methods capable of combining multiple API calls to perform common ISEC workflows (using above query schema) to abstract use away from individual REST API endpoints
+- A simple query schema for ISEC data structures, processes and commands.
+- Higher level workflow methods capable of combining multiple REST API calls to perform common ISEC workflows (using above query schema) to abstract use away from individual REST API endpoints.
 
 |
 
@@ -54,9 +68,7 @@ We can then provide a module level function to set the CONSOLEFQDN env var if it
 I don't see any issue with this direction, as it seems unlikely to me that peeople would want to write an automation targeting multiple ISEC consoles, but even if they did, they could simply change the env var on the fly as per above.
 
 However, as I develop the rest of the library it may turn out to be of issue in the odd occurence where a context needs tracked within a script or automation for multiple consoles.
-If such issues appear in early development, I'll move this to a class (prior to a 1.0.0 release) but I'm hoping that won't be necessary.
-
-If such issues appear after a 1.0.0 release, I shall look toward resolving it using kwargs in the get_url_for() function to allow the ablity to add backward compatible functionality (such as overriding the default envar based CONSOLEFQDN per call).
+If this happens, I shall simply resolve this using kwargs in the get_url_for() function to allow the ablity to add backward compatible functionality (such as overriding the default envar based CONSOLEFQDN per call).
 
 |
 |
@@ -103,7 +115,7 @@ While this can be achieved manually in the console using Smart Filters, this is 
 
 Not a hugely laborious task of course, but one which still is open to human error or simply being forgotten about in a given month.
 
-Replicating this via REST API calls however requires mutliple calls, loops and script side filtering of patches (unfortunately you cannot simply run the same SQL via the API which runs when a Smart Filter is viewed in the console).
+Replicating this via REST API calls however requires mutliple calls, loops and script side filtering of patches (unfortunately you cannot trigger the same backend SQL queries via the API as what run when a Smart Filter is viewed in the console).
 
 This would generally be implimented in raw Python code as follows:
 ::
@@ -112,10 +124,11 @@ This would generally be implimented in raw Python code as follows:
     from requests_kerberos import HTTPKerberosAuth, OPTIONAL
 
     kerby = HTTPKerberosAuth(mutual_authentication=OPTIONAL)
-    ver = 'rootcert_may2023.cer'
+    ver = 'rootcert_may2023.cer'  # console STRootAuthority CA Certificate
     baseurl = 'https://CONSOLEFQDN:3121/st/console/api/v1.0/'
 
-    url = f'{baseurl}metadata/vendors?count=1' # ASSUMING THE .NET FAMILY IS FIRST IN THE RESPONSE LIST!!!
+    url = f'{baseurl}metadata/vendors?count=1'    #  at time of writing, the .NET family is first in this response 
+                                                  #  otherwise you'd need to be a little smarter here
     response = requests.get(url,auth=HTTPKerberosAuth(mutual_authentication=OPTIONAL),verify=False)
 
     for obj in response.json()['value'][0]['families'][0]['products']:
@@ -133,7 +146,7 @@ This would generally be implimented in raw Python code as follows:
         if 'hosting' in obj['name'] :
             print(obj['kb'])
             patch = obj['kb']
-            break # WE DONE
+            break # we only want the most recent hosting bundle patch so we can stop iterating now
 
     # then get patch id from kb
 
@@ -142,7 +155,7 @@ This would generally be implimented in raw Python code as follows:
 
     patchid = response.json()['value'][0]['vulnerabilities'][0]['id']
 
-    print(patchid) # THIS IS USED TO ADD TO A PATCH GROUP
+    print(patchid) # THIS IS USED TO ADD TO A PATCH GROUP VIA THE REST API (can't use kb)
 
     url = f'{baseurl}patch/groups/2/patches'
 
@@ -182,12 +195,81 @@ As previously mentioned, the 'query' functionality may be left for a future upda
 ::
 
     import isecapipy
-    handler = isecapipy.handler('myconsolecertificate.cer',auth=kerberos, consoleFQDN = 'uwm-isec-01.uwm.local')
+    handler = isecapipy.handler('myconsolecertificate.cer',auth=isecapipy.KERBEROS, consoleFQDN = 'uwm-isec-01.uwm.local')
 
-    family = handler.get_family(name = '.NET 6.0')
-    patches = handler.get_patches(family=family.id)
+    product = handler.get_family(name = '.NET 6.0')
+    patches = handler.get_patches(product=product.id)
 
     patch_list = [patch.kb for patch in patches if 'hosting' in patch.name]
 
+|
+
+Note, The stucture of the patch metadata JSON for example is highly nested [1] but the intention is to flatten this as much as possible in the public API usage.
+This will result in some design decisions ommitting some 1-1 mappings of the REST API enpoints in the higher level wrapper methods of the public API but care will be taken to ensure broad coverage of use cases and sensible data structure choices based on what information users will actually be likely to need input and output of the API.
+
+[1] see for example line 12 in the raw Python example from earlier:
+::
+    
+    for obj in response.json()['value'][0]['families'][0]['products']:
+
+|
 
 That concludes my initial plans for this package, I hope the intended usage is nice and clear. Now on to implimentation!
+
+
+Implimentation notes
+====================
+
+While it will be possible to generate the URL for any possible REST API query, most of the regular use of the library would be from the higher level wrapper functions which abstract individual REST API calls.
+
+Each API endpoint's response will usually contain links to the related resources so generating links should not be necessary throughout many processes as the links will be obtained from each response.
+
+The link generation would mainly be used as an entry point of a task and where querying is required at any level.
+
+To assist with designing these entry and exit points where the endpoints will interlink, it might be useful to think of the endpoints as grouped broadly in the following way.
+
+::
+
+    Administrative and general config:
+
+    Cloud Sync
+    Configuration
+    Credentials
+    Distribution Servers and IP Ranges
+    Users
+
+    Patching related:
+
+    Linux Patch Metadata
+    Linux Patch Goup
+    Linux Patch Deployment Configurations
+    Linux Patch Scan Configurations
+
+    Patches
+    Patch Groups
+    Patch Metadata
+    Patch Scans
+    Patch Scan Templates
+    Product Level Groups
+    Vendor Family Product Metadata
+    Patch Downloads
+    Patch Delpoyments
+    Patch Deployment Templates
+
+    Agents:
+
+    Agents
+    Agent Deployment
+    Agent Tasks
+    Policies
+
+    Endpoints:
+
+    Machines
+    Machine Groups
+    Virtual Infrastructure
+    Asset Scan Templates ???
+
+    Operation Management:
+
+    Operations Controller
