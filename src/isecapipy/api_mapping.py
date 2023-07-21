@@ -1,6 +1,8 @@
+"""This is a placeholder module docstring"""
+
 def placeholder():
     """This is a placeholder function to test importing structure"""
-    
+
     pass
 
 urls = {
