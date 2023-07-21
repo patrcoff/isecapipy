@@ -77,7 +77,7 @@ def get_get(text):
                     sections_list.append(section)
                 except:
                     pass
-        return sorted(sections_list, key = lambda x : len(x))[0]
+        return sorted(sections_list, key = len)[0]
     
     except:
         pass
