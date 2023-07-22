@@ -17,7 +17,7 @@ Where the two terms are referenced, please note their brief summary descriptions
 | REST API  | This refers to the actual calls or endpoints of the REST API of the ISEC console itself.                                                                         |
 +-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Endpoint  | This can also have two meanings but should be obvious from context. It can either mean a REST API endpoint (an individual uri available from the ISEC REST API)  |
-|           | Or it could mean a physical or virtual hardware target such as a PC or Server, which is to be patched or otherwise managed via the API                           |
+|           | Or it could mean a physical or virtual hardware target such as a PC or Server, which is to be patched or otherwise managed via ISEC                              |
 +-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 |
