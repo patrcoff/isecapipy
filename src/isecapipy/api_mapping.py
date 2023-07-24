@@ -1,10 +1,8 @@
 """This is a placeholder module docstring"""
 
-
 from datetime import datetime
 from typing import List, Dict
 from pydantic import BaseModel
-import json
 
 def placeholder():
     """This is a placeholder function to test importing structure"""
