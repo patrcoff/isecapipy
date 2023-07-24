@@ -4,4 +4,4 @@ black
 requests
 pytest
 requests-ntlm
--e isecapipy
+-e ./isecapipy
