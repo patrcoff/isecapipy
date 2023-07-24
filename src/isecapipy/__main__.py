@@ -1,0 +1,2 @@
+#  here we will create some management commands such as for managing env vars, entering passwords etc
+#  could also include some CLI quick query commands, i.e. get agent with hostname - pretty print its details

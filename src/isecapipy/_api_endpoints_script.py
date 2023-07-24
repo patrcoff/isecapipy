@@ -1,4 +1,5 @@
 # pylint: skip-file
+# this is likely to be removed soon
 import re
 
 links = """

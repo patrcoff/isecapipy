@@ -151,4 +151,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# to be used to store any private notes a developer has which should not be shared
 private-notes.txt
+
+# experimentation, tests and scripts specific to a given local dev environment  
+access_isec_via_ssh_tunnel.py

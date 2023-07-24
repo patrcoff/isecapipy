@@ -1,14 +1,23 @@
 """This is a placeholder module docstring"""
 
-from pydantic import BaseModel, Opt
+from pydantic import BaseModel
 from datetime import datetime
 from typing import Deque, List, Optional, Tuple, Dict
 
 def placeholder():
     """This is a placeholder function to test importing structure"""
+    return True
 
 class Links(BaseModel):
     value: Dict[str, Dict[str, str]]
+
+class FrameworkVersion(BaseModel):
+    major: int
+    minor: int
+    build: int
+    revision: int
+    majorRevision: int
+    minorRevision: int
 
 class AgentDetail(BaseModel):
     agentId: str
@@ -21,13 +30,13 @@ class AgentDetail(BaseModel):
     lastKnownIPAddress: str
     links: Dict[str, Dict[str, str]]
     listeningPort: int
-    machineNme: str
+    machineName: str
     reportedPolicyId: str
     status: str  # is enum in docs
 
 class AgentStatus(BaseModel):
     agentId: str
-    frameworkVersion: str
+    frameworkVersion: FrameworkVersion
     installedPackages: List[str]
     lastCheckIn: datetime
     links: Dict[str, Dict[str, str]]

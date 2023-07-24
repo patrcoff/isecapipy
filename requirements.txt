@@ -1,7 +1,3 @@
-bs4
-pylint
-black
 requests
-pytest
 requests_ntlm
 requests_kerberos

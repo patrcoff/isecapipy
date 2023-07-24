@@ -1,0 +1,31 @@
+{
+    "agentId": "9BAECEF62A13EC5C919C74239EA89AF2B634C955",
+    "assignedPolicyId": "82da7c90-8618-44c3-94b4-876c651bf48a",
+    "dnsName": "uwm-rhel7-01.uwm.local",
+    "domain": "uwm.local",
+    "frameworkVersion": "9.5.884906",
+    "isListening": true,
+    "lastCheckIn": "2023-07-23T16:36:51.457",
+    "lastKnownIPAddress": "192.168.2.70",
+    "links": {
+        "self": {
+            "href": "https://127.0.0.1:3121/st/console/api/v1.0/agents/9BAECEF62A13EC5C919C74239EA89AF2B634C955"
+        },
+        "status": {
+            "href": "https://127.0.0.1:3121/st/console/api/v1.0/agents/9BAECEF62A13EC5C919C74239EA89AF2B634C955/status"
+        },
+        "checkin": {
+            "href": "https://127.0.0.1:3121/st/console/api/v1.0/agenttasks/9BAECEF62A13EC5C919C74239EA89AF2B634C955/checkin"
+        },
+        "tasks": {
+            "href": "https://127.0.0.1:3121/st/console/api/v1.0/agenttasks/9BAECEF62A13EC5C919C74239EA89AF2B634C955/tasks"
+        },
+        "queuedTasks": {
+            "href": "https://127.0.0.1:3121/st/console/api/v1.0/agenttasks/9BAECEF62A13EC5C919C74239EA89AF2B634C955/queuedTask"
+        }
+    },
+    "listeningPort": 4200,
+    "machineName": "uwm-rhel7-01",
+    "reportedPolicyId": "82da7c90-8618-44c3-94b4-876c651bf48a",
+    "status": "Installed"
+}
