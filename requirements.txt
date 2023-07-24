@@ -1,3 +1,4 @@
-requests
-requests_ntlm
-requests_kerberos
+requests==2.28.2
+requests-kerberos==0.14.0
+requests-ntlm==1.2.0
+pydantic>=2.0.3
