@@ -4,4 +4,5 @@ black
 requests
 pytest
 requests-ntlm
+pydantic
 -e .

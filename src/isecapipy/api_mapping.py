@@ -1,8 +1,10 @@
 """This is a placeholder module docstring"""
 
+
 from datetime import datetime
 from typing import List, Dict
 from pydantic import BaseModel
+import json
 
 def placeholder():
     """This is a placeholder function to test importing structure"""
@@ -13,8 +15,10 @@ class Links(BaseModel):
 
     value: Dict[str, Dict[str, str]]
 
+
 class FrameworkVersion(BaseModel):
     """The REST API data model for FrameworkVersion (from AgentDetial->AgentStatus)"""
+
     major: int
     minor: int
     build: int
@@ -23,8 +27,8 @@ class FrameworkVersion(BaseModel):
     minorRevision: int
 
 class AgentDetail(BaseModel):
-
     """The REST API data model for AgentDetail"""
+
     agentId: str
     assignedPolicyId: str
     dnsName: str
