@@ -7,7 +7,7 @@ plan or schdeule features accepted for development, or prioritise or order them 
 
 -----
 
-## Basic List for 1.0.0 release
+## Basic feature List for 1.0.0 release
 
 
 
@@ -35,3 +35,11 @@ The below list of features should take us well up to a 1.0.0 release.
 
 - [] SQL query handler (direct connection to isec db for requests slow over REST API)
 - [] 
+
+
+## Issues to be consider prior to 1.0.0 release
+
+- [] design conditional importing and use of ntlm-kerberos (windows only) and how to 
+manage the conditional installation of it for gh actions etc. It should be the default when on Windows
+but installing in Linux fails, breaking the linting and testing actions... or do we consider Windows actions for testing (ewww)? End customers though are likely to be a mixture of both so we don't really want to have one default globally, it should be an extension to the module if run in windows to improve usability in that environment.
+- []

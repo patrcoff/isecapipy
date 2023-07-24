@@ -1,6 +1,23 @@
 [project]
 name = "isecapipy"
 version = "0.0.1"
+description = "A Python wrapper for the Ivanti Security Controls Console REST API"
+authors = [
+  {name = "Patrick Coffey", email = "patrick@coffeystudio.com"},
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+keywords = ["ISEC", "Security Controls", "ISEC API", "ISEC REST API", "Ivanti",]
+dependencies = [
+  "requests>=2.28.2",
+  "requests-ntlm>=1.2.0",
+  "pydantic>=2.0.3",
+  "requests-kerberos>=0.14.0; os_name == 'nt'",
+]
+
+[project.optional-dependencies]
+windows = ["requests-kerberos"]
 
 [build-system]
 requires = ["hatchling"]
@@ -10,3 +27,6 @@ build-backend = "hatchling.build"
 # Decrease the maximum line length to 79 characters.
 line-length = 100
 src = ["src"]
+
+[project.urls]
+Repository = "https://github.com/patrcoff/isecapipy.git"

@@ -22,14 +22,18 @@ agents = isec.agents.get()  # returns a list of AgentDetail instances
 
 for agent in agents:
     isecpipy.checkin(agent)
-    isecapipy.
 
-#> 123
+#> Sending check in request to Agent 'UWM-W10-01.UWM.LOCAL' succeeded.
+#> ...
 ```
 
-    **It should be noted that the above example is not yet implemented, it is for demonstration purposes only at this time**.
+    It should be noted that the above example is not yet implemented, it is a placeholder for **intended** general API usage demonstration purposes only at this time.
 
-The project is currently undergoing structural and procedural design, following which the below tasks will be completed:
+-----
+
+## Project Status
+
+The project is currently undergoing structural and procedural design (CI/CD), following which the below tasks will be completed:
 
 - [] 1-1 mappings of REST API endpoints to URI dict
 - [] 1-1 mappings of REST API endpoints to package level functions

@@ -1,11 +1,13 @@
 A place for the devs to discuss project plans
 =============================================
 
-(That of course means me and Gary at the time of writing.)
+(This file was created early in the project's initial planning stage and was intended as a guide to a former colleague of mine.
+As they no longer work with me and collaboration with colleagues is not currently forseen then this file may now be redundant and any useful content from it moved to newer planning documents or parts of the readme in general.
+Anyone who does wish to contribute to the project however is encrouraged still to do so.)
 
 A note to the public - if anyone happens across this project.
 
-I am currently working as a TSE for Ivanti, supporting the product 'Ivanti Security Controls' (often referrd to simply as ISEC), and Gary is a former colleague who has moved on, but as chance has it, is now a customer of Ivanti's (and he will be responsible in his company for the administration of their ISEC instance)
+I am now a former TSE for Ivanti, having supported the product 'Ivanti Security Controls' (often referrd to simply as ISEC), and Gary is a former colleague who has moved on, but as chance has it, is now a customer of Ivanti's (and he will be responsible in his company for the administration of their ISEC instance)
 
 As we are both keen to improve our programming experience (and Python is the best language, sorry-not-sorry), we thought a joint project to wrap the ISEC REST API would be a good first collaborative project for us both. This will provide the benefits of having both Ivanti Support and customer points of view, which will hopefully inspire a useful product which could be used by other users of ISEC hoping to automate tasks via the REST API using the Python language.
 
@@ -14,9 +16,9 @@ As we are both keen to improve our programming experience (and Python is the bes
 .. note::
     **DISCLAIMER**
 
-    It is important to note that while I am an employee of Ivanti, this project is by no means affiliated with Ivanti (the company) in **any** way. It is solely an open source project, worked on in a voluntary capacity by the core contributers, outside of employed working hours. This project is not endoursed, sponsored or paid for in any way by Ivanti, or any other organisation.
+    It is important to note that while I am a **former** employee of Ivanti, this project is by no means affiliated with Ivanti (the company) in **any** way. It is solely an open source project, worked on in a voluntary capacity by the core contributers, outside of employed working hours. This project is not endoursed, sponsored or paid for in any way by Ivanti, or any other organisation.
     It is an opinionated implementation of the ISEC REST API and has no direct conenction to the developers of ISEC itself.
-    We cannot guarantee this project will cause no damage to a production system and this module should only ever be used by professionals capable of understanding the code. It is advised to perform extensive testing prior to implementing any code which makes use of this module.
+    We cannot guarantee this project will cause no damage to a production system and this module should only ever be used by professionals capable of understanding the code as well as the basic inner workings of the ISEC console itself. It is advised to perform extensive testing prior to implementing any code which makes use of this module.
 
 -----
 
@@ -41,7 +43,7 @@ Useful Links and references
 |                                 |  some youtube courses based on his books.            |                              |                                                                                                            |
 +---------------------------------+------------------------------------------------------+------------------------------+------------------------------------------------------------------------------------------------------------+
 |Understanding python import      | How a module can be imported depends on a few different things, such as where the   | https://youtu.be/v6tALyc4C10                                                                               |
-|statement and packaging modules.| module is installed, or if it simply exists in the current directory etc.           |                                                                                                            |
+|statement and packaging modules. | module is installed, or if it simply exists in the current directory etc.           |                                                                                                            |
 |                                 | All of this is explained well by this realpython code conversation video.           |                                                                                                            |
 +---------------------------------+-------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
