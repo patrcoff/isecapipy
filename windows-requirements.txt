@@ -4,3 +4,4 @@ black
 requests
 pytest
 requests-ntlm
+requests-kerberos
