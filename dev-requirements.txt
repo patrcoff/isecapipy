@@ -3,5 +3,5 @@ pylint
 black
 requests
 pytest
-requests_ntlm
-requests_kerberos
+requests-ntlm
+requests-kerberos
