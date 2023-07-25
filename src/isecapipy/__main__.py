@@ -13,8 +13,6 @@ def manage():
 def main():
     """A placeholder for main entry point (for a cli)"""
 
-    pass
-
 
 if __name__ == "__main__":
     main()
