@@ -14,7 +14,7 @@ from .api_mapping import (
     AgentTaskState,
     SuccessCode,
     ExecutedTask,
-    QueuedTask
+    QueuedTask,
 )
 
 from .__main__ import manage

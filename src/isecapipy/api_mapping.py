@@ -4,9 +4,11 @@ from datetime import datetime
 from typing import List, Dict
 from pydantic import BaseModel
 
+
 def placeholder():
     """This is a placeholder function to test importing structure"""
     return True
+
 
 class Links(BaseModel):
     """The REST API data model for Links objects"""
@@ -23,6 +25,7 @@ class FrameworkVersion(BaseModel):
     revision: int
     majorRevision: int
     minorRevision: int
+
 
 class AgentDetail(BaseModel):
     """The REST API data model for AgentDetail"""
@@ -41,6 +44,7 @@ class AgentDetail(BaseModel):
     reportedPolicyId: str
     status: str  # is enum in docs
 
+
 class AgentStatus(BaseModel):
     """The REST API data model for Agent Status"""
 
@@ -54,6 +58,7 @@ class AgentStatus(BaseModel):
     runningPolicyId: str  # guid
     runningPolicyVersion: int  # this says Uint32 in rest docs but probably fine
 
+
 class SuccessCode(BaseModel):
     """The REST API data model for SuccessCode"""
 
@@ -61,13 +66,11 @@ class SuccessCode(BaseModel):
     description: str
 
 
-
-
 class AgentDeployStatus(BaseModel):
-    """The REST API data model for AgentDeployStatus    
-       Really annoyingly the isec docs use AgentStatus multiple times to mean different responses
-       This is called AgentStatus in the agent deployments endpoint doc page, but has been changed 
-       to avoid clashing. There also seems to be a lot of redundancy in this endpoint..."""
+    """The REST API data model for AgentDeployStatus
+    Really annoyingly the isec docs use AgentStatus multiple times to mean different responses
+    This is called AgentStatus in the agent deployments endpoint doc page, but has been changed
+    to avoid clashing. There also seems to be a lot of redundancy in this endpoint..."""
 
     error: str
     id: str
@@ -75,6 +78,7 @@ class AgentDeployStatus(BaseModel):
     percentComplete: int
     status: str
     statusTime: datetime
+
 
 class AgentDeploymentStatus(BaseModel):
     """The REST API data model for Agent Deployment Status"""
@@ -86,6 +90,7 @@ class AgentDeploymentStatus(BaseModel):
     percentComplete: int
     Status: str
 
+
 class AgentPolicyTask(BaseModel):
     """The REST API data model for Agent Policy Task"""
 
@@ -95,12 +100,14 @@ class AgentPolicyTask(BaseModel):
     taskName: str
     taskType: str  # (enum)
 
+
 class ExecutedTask(BaseModel):
     """The REST API data model for an executed Task"""
 
     agentId: str
     executingTaskId: str
     links: Dict[str, Dict[str, str]]
+
 
 class AgentTaskState(BaseModel):
     """The REST API data model for an agent Task's state"""
@@ -114,6 +121,7 @@ class AgentTaskState(BaseModel):
     operationId: str
     startTime: datetime
 
+
 class QueuedTask(BaseModel):
     """The REST API data model for a Queued Task"""
 
@@ -123,310 +131,259 @@ class QueuedTask(BaseModel):
     taskStatus: AgentTaskState
 
 
-
-
 uris = {
-    'AGENTS': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agents'
-            },
-        'get': {
-            'agents': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agents',
-                'params': [
+    "AGENTS": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents"},
+        "get": {
+            "agents": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents",
+                "params": [
+                    {"count": {"type": int, "default": 100}},
+                    {"listening": {"type": bool, "default": True}},
                     {
-                        'count': {
-                            'type': int,
-                            'default': 100
-                        }
+                        "name": {"type": str, "default": None},
+                        "Start": {"type": int, "default": None},
                     },
-                    {
-                        'listening': {
-                            'type': bool,
-                            'default': True
-                        }
-                    },
-                    {
-                        'name': {
-                            'type': str,
-                            'default': None
-                        },
-                        'Start': {
-                            'type': int,
-                            'default': None
-                        }
-                    }
                 ],
-                'return': AgentDetail # this needs expanded into a return data class
+                "return": AgentDetail,  # this needs expanded into a return data class
             },
-            'agent': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}',
-                'params': None,
-                'return': AgentDetail # this needs expanded into a return data class
+            "agent": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}",
+                "params": None,
+                "return": AgentDetail,  # this needs expanded into a return data class
             },
-            'status': {
-                'href': 
-                    'https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}/status',
-                'params': None,
-                'return': AgentStatus # this needs expanded into a return data class
+            "status": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}/status",
+                "params": None,
+                "return": AgentStatus,  # this needs expanded into a return data class
+            },
+        },
+        "put": {
+            "agent_policy": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}/policy",
+                "params": None,
+                "request_body": {"policyId": str, "checkin": bool},
+                "return": SuccessCode,
             }
         },
-        'put': {
-            'agent_policy': {
-                'href': 
-                    'https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}/policy',
-                'params': None,
-                'request_body': {
-                    'policyId': str,
-                    'checkin': bool
-                },
-                'return': SuccessCode
+        "delete": {
+            "agent": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}",
+                "params": None,
+                "request_body": {"policyId": str, "checkin": bool},
+                "return": SuccessCode,
             }
         },
-        'delete': {
-            'agent': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}',
-                'params': None,
-                'request_body': {
-                    'policyId': str,
-                    'checkin': bool
-                },
-                'return': SuccessCode
-            }
-        },
-        'post': None
+        "post": None,
     },
-
-    'Agent Deployments': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment'
+    "Agent Deployments": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment"
         },
-        'get': {
-            'deployment': {
-                'href': 
-                    'https://<consoleFQDN:port>/st/console/api/v1.0/agents/'\
-                    'deployment/{agentdeployment ID}',
-                'params': None,
-                'request_body': None,
-                'response': AgentDeploymentStatus
+        "get": {
+            "deployment": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/"
+                "deployment/{agentdeployment ID}",
+                "params": None,
+                "request_body": None,
+                "response": AgentDeploymentStatus,
             }
         },
-        'post': {
-            'deployment': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment',
-                'params': None,
-                'request_body': {
-                    'assignedGroup': {
-                        'required': False,
-                        'type': str
-                        },
-                    'connectionMethod': {
-                        'required': False,
-                        'type': str  
+        "post": {
+            "deployment": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment",
+                "params": None,
+                "request_body": {
+                    "assignedGroup": {"required": False, "type": str},
+                    "connectionMethod": {
+                        "required": False,
+                        "type": str
                         # this is an Enum in the REST API docs so will likely add that later
-                        },
-                    'credentialId': {
-                        'required': False,
-                        'type': str
-                        },
-                    'endPointNames': {
-                        'required': False,
-                        'type': str
-                        },
-                    'machineGroupIds': {
-                        'required': False,
-                        'type': (list, int)  # a list of ints
-                        },
-                    'policyId': {
-                        'required': True,
-                        },
-                    'sshServerValidationMode': {'required': False},
-                    'useMachineCredentialId': {'required': False}
+                    },
+                    "credentialId": {"required": False, "type": str},
+                    "endPointNames": {"required": False, "type": str},
+                    "machineGroupIds": {
+                        "required": False,
+                        "type": (list, int),  # a list of ints
+                    },
+                    "policyId": {
+                        "required": True,
+                    },
+                    "sshServerValidationMode": {"required": False},
+                    "useMachineCredentialId": {"required": False},
                 },
-                'response': SuccessCode  # links to operations in header of response...
+                "response": SuccessCode,  # links to operations in header of response...
             }
+        },
+    },
+    "Agent Tasks": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks"
+        },
+        "get": {
+            "tasks": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}/tasks",
+                "params": None,
+                "request_body": None,
+                "response": AgentPolicyTask,
+            },
+            "executedTask": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}"
+                "/queuedTask",
+                "params": None,
+                "request_body": None,
+                "response": ExecutedTask,
+            },
+            "queuedTask": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}"
+                "/queuedTask/{queuedTaskId}",
+                "params": None,
+                "request_body": None,
+                "response": QueuedTask,
+            },
+        },
+        "post": {
+            "checkin": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}"
+                "/checkin",
+                "params": None,
+                "request_body": None,
+                "response": SuccessCode,
+            },
+            "taskById": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}"
+                "/tasks/{taskId}",
+                "params": None,
+                "request_body": None,
+                "response": ExecutedTask,
+            },
+        },
+        "delete": {
+            "task": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}"
+                "/queuedTask{queuedTaskId}",
+                "params": None,
+                "request_body": None,
+                "response": SuccessCode,
+            }
+        },
+        "put": None,
+    },
+    "Asset Scan Templates": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates"
         }
     },
-    'Agent Tasks': {
-        'base_url': {'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks'},
-        'get': {
-            'tasks': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}/tasks',
-                'params': None,
-                'request_body': None,
-                'response': AgentPolicyTask
-                },
-            'executedTask': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}'\
-                '/queuedTask',
-                'params': None,
-                'request_body': None,
-                'response': ExecutedTask
-                },
-            'queuedTask': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}'\
-                    '/queuedTask/{queuedTaskId}',
-                'params': None,
-                'request_body': None,
-                'response': QueuedTask
-                }
-            },
-        'post': {
-            'checkin': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}'\
-                    '/checkin',
-                'params': None,
-                'request_body': None,
-                'response': SuccessCode
-                },
-            'taskById': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}'\
-                    '/tasks/{taskId}',
-                'params': None,
-                'request_body': None,
-                'response': ExecutedTask
-                }
-            },
-        'delete': {
-            'task': {
-                'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}'\
-                    '/queuedTask{queuedTaskId}',
-                'params': None,
-                'request_body': None,
-                'response': SuccessCode
-                }
-            },
-        'put': None
+    "Cloud Sync": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync"}
     },
-    'Asset Scan Templates': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates'
-            }
-    },
-    'Cloud Sync': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync'
-            }
-    },
-    'Configuration': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/configuration'
-            }
-    },
-    'Credentials': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/credentials'
-            }
-    },
-    'distributionservers': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/distributionservers'
-            }
-    },
-    'ipranges': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/ipranges'
-            }
-    },
-    'deploymentconfigurations': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/'\
-                'deploymentconfigurations'
+    "Configuration": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/configuration"
         }
     },
-    'scanconfigurations': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/scanconfigurations'
-            }
+    "Credentials": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials"
+        }
     },
-    'machinegroups': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups'
-            }
+    "distributionservers": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/distributionservers"
+        }
     },
-    'machines': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/machines'
-            }
+    "ipranges": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/ipranges"}
     },
-    'vendors': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/metadata/vendors'
-            }
+    "deploymentconfigurations": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+            "deploymentconfigurations"
+        }
     },
-    'operations': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/operations'
-            }
+    "scanconfigurations": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/scanconfigurations"
+        }
     },
-    'deployments': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/stconsole/api/v1.0/patch/deployments'
-            }
+    "machinegroups": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups"
+        }
     },
-    'deploytemplates': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/deploytemplates'
-            }
+    "machines": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/machines"}
     },
-    'downloads': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/downloads'
-            }
+    "vendors": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/metadata/vendors"
+        }
     },
-    'groups': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/groups'
-            }
+    "operations": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/operations"
+        }
     },
-    'patchmetadata': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/patchmetadata'
-                     }
+    "deployments": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/stconsole/api/v1.0/patch/deployments"
+        }
     },
-    'productlevelgroups': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/productlevelgroups'
-                     }
+    "deploytemplates": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/deploytemplates"
+        }
     },
-    'scanTemplates': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/scanTemplates'
-                     }
+    "downloads": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/downloads"
+        }
     },
-    'scans': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patch/scans'
-                     }
+    "groups": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/groups"
+        }
     },
-    'patches': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/patches'
-                     }
+    "patchmetadata": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/patchmetadata"
+        }
     },
-    'policies': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/policies'
-                     }
+    "productlevelgroups": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/productlevelgroups"
+        }
     },
-    'servicecredentials': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/servicecredentials'
-                     }
+    "scanTemplates": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/scanTemplates"
+        }
     },
-    'sessioncredentials': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/sessioncredentials'
-                     }
+    "scans": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/patch/scans"
+        }
     },
-    'users': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/users'
-                     }
+    "patches": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/patches"}
     },
-    'virtual': {
-        'base_url': {
-            'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/virtual'
-                     }
-    }
+    "policies": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/policies"}
+    },
+    "servicecredentials": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/servicecredentials"
+        }
+    },
+    "sessioncredentials": {
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/sessioncredentials"
+        }
+    },
+    "users": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/users"}
+    },
+    "virtual": {
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/virtual"}
+    },
 }
