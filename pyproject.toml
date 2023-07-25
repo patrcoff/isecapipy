@@ -19,6 +19,9 @@ dependencies = [
 [project.optional-dependencies]
 windows = ["requests-kerberos"]
 
+[project.scripts]
+isec-set-auth = "isecapipy:manage"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

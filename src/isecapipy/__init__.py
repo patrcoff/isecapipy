@@ -16,3 +16,5 @@ from .api_mapping import (
     ExecutedTask,
     QueuedTask
 )
+
+from .__main__ import manage
