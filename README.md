@@ -44,4 +44,3 @@ The project is currently undergoing structural and procedural design (CI/CD), fo
 After this point, commits directly made to main will not be allowed, moving to a proper github style workflow as the project matures toward a 1.0.0 release.
 
 ## Requirements
-

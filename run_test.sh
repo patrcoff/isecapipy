@@ -1,2 +1,2 @@
-#!"C:/Program Files/Git/bin/sh.exe"
-../venv/Scripts/python.exe -m pytest tests
+#!/usr/bin/sh
+../.venv/bin/python -m pytest tests

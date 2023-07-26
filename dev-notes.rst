@@ -101,7 +101,7 @@ useful dev workflows, commands, tools etc
 
 
 
-    py -m venv venv --prompt isecapi 
+    py -m venv venv --prompt isecapi
 
     venv/source/activate
 
@@ -114,7 +114,7 @@ Stage One Plan
 ==============
 
 The core deliverable initially is to simply make a 1-1 mapping of the ISEC api endpoints in a python module wrapper complete with parameters, json body field mappings and accepted request methods for each API endpoint.
-This should also contain tests (within the module but not the type of tests which would run pre-commit when we get to that stage of CI/CD) which verify the current version of the wrapper is not behind the current version of ISEC in terms of available 
+This should also contain tests (within the module but not the type of tests which would run pre-commit when we get to that stage of CI/CD) which verify the current version of the wrapper is not behind the current version of ISEC in terms of available
 Initial plan is to support the latest version of the console's API at any point in time, backword compatability work will be handled in a later stage
 
 
@@ -123,7 +123,7 @@ Desirable features for future stages
 
 - Implement commonly requested Workflows, examples below
     - Patch to zero feature (if this isn't included for Windows in 2023.3)
-    - Trigger patch scan of x machine group based on y scan template 
+    - Trigger patch scan of x machine group based on y scan template
 - Implement automations of existing GUI workflows which currently need to be performed manually, examples below
     - Generate patch group based on 'smart filter' type logic.
     - Return list of machine objects based on 'smart filter logic'

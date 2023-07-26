@@ -1,2 +1,2 @@
-#!"C:/Program Files/Git/bin/sh.exe"
-../venv/Scripts/python.exe -m pylint isecapipy
+#!/usr/bin/sh
+../.venv/bin/python -m pylint isecapipy

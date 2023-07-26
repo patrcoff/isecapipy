@@ -127,7 +127,7 @@ This would generally be implimented in raw Python code as follows:
     ver = 'rootcert_may2023.cer'  # console STRootAuthority CA Certificate
     baseurl = 'https://CONSOLEFQDN:3121/st/console/api/v1.0/'
 
-    url = f'{baseurl}metadata/vendors?count=1'    #  at time of writing, the .NET family is first in this response 
+    url = f'{baseurl}metadata/vendors?count=1'    #  at time of writing, the .NET family is first in this response
                                                   #  otherwise you'd need to be a little smarter here
     response = requests.get(url,auth=HTTPKerberosAuth(mutual_authentication=OPTIONAL),verify=False)
 
@@ -209,7 +209,7 @@ This will result in some design decisions ommitting some 1-1 mappings of the RES
 
 [1] see for example line 12 in the raw Python example from earlier:
 ::
-    
+
     for obj in response.json()['value'][0]['families'][0]['products']:
 
 |
