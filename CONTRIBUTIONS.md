@@ -103,6 +103,8 @@ This installs all development requirements including `pre-commit`, however you s
 
 In order for a PR to be accepted, all code added to the project should be covered with Pytest tests, which will run during the pre-commit hooks.
 
+Commits will fail if coverage is < 95%.
+
 Tests exist in the `projectroot/tests` directory as is fairly standard and can import the module as an end user would with '`import isecapipy`' due to the use of the [editable install](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) of the project within the 'dev-requirement.txt' file.
 
 As best practice, it is a good idea to keep tests segmented into numerous files so that contributors do not end up often editing the same files which will help reduce the likelihood of conflicts when merging. It also helps devs quickly see which test files are relevant to a given piece of code. Take care to name test files and functions with good descriptive names clearly outlining their purpose. I do not personally encourage the use of class based tests. For more guidance on testing, see [Pytest's ](https://docs.pytest.org/en/7.4.x/) own documentation or search for a suitable tutorial online. I make fairly basic us of testing but simple Pytests can go a long way!
