@@ -91,7 +91,13 @@ This installs all development requirements including `pre-commit`, however you s
  pre-commit run --all-files
  ```
 
+ #### Warning: Windows Users!
+
+ Make sure your git's '/usr/bin/' directory is added to `PATH`, otherwise running pre-commit manually will fail. The default location assuming you are using Git for Windows is 'C:\Program Files\Git\usr\bin', which is where `sh.exe` resides.
+
  ----
+
+</br>
 
  ### Testing
 
