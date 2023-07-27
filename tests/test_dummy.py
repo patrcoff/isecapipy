@@ -9,8 +9,8 @@ def test_placeholder():
 
 
 def test_main():
-    assert isecapipy.__main__.main() == None
+    assert isecapipy.__main__.main() is None
 
 
 def test_manage():
-    assert isecapipy.manage() == None
+    assert isecapipy.manage() is None
