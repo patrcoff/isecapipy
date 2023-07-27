@@ -30,6 +30,6 @@ repos:
       name: coverage
       stages: [commit]
       language: system
-      entry: pytest --cov .
+      entry: pytest --cov-fail-under=100 .
       types: [python]
       pass_filenames: false
