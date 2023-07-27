@@ -18,6 +18,31 @@
 
  TIP: If you're working on a GitHub issue, name your branch after the issue number, e.g. `issue-123-<ISSUE-NAME>`. This will help us keep track of what you're working on. If there is not an issue for what you're working on, create one first please. Someone else might be working on the same thing, or we might have a reason for not wanting to do it.
 
+ ## Venv
+
+ As is best practice, you should install the project and its dependencies into a virtual environment and not your system wide Python installation.
+
+ Personally I prefer to use the standard lib venv module for this.
+
+ The scripts used by the following section require that your venv be named `.venv` and exist in the parent folder of the project directory.
+
+ ```
+ ├── isecapipy
+ |   ├── src
+ |   ├── tests
+ |   ├── ...
+ ├── .venv
+ └── private work of yours outside project dir
+ ```
+
+To specify a unique or helpful prompt description when the venv is activated, create it with the following syntax:
+
+    python -m venv .venv --prompt isecapipy
+
+Which will create a prompt looking like the below image which is helpful when jumping between terminal windows:
+
+![Prompt with venv description](/docs_imgs/venv_with_prompt.PNG "venv w. prompt")
+
  ## Pre-commit
 
  GitHub Actions is going to run Pre-commit hooks on your PR. If the hooks fail, you will need to fix them before your PR can be merged. It will save you a lot of time if you run the hooks locally before you push your changes. To do that, you need to install pre-commit on your local machine.
