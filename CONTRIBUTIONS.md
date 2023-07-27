@@ -82,20 +82,6 @@ This installs all development requirements including `pre-commit`, however you s
  pre-commit run --all-files
  ```
 
-### ~~Windows Users Extra Requirements~~
-
-~~On Windows, as bash is not installed natively, you may need to add your git/git bash Programs folder to your PATH environment variable for the scripts called by pre-commit to run.~~
-
-~~The scripts start with the standard #!/usr/bin/sh 'shebang' line to tell the interpreter what program to use to run the scripts.~~
-
-~~Windows doesn't normally use these lines however your implimentation of git should, but for it to run properly, the location containing the /usr directory needs to be on PATH.~~
-
-~~For regular Git for Windows / Git Bash, this would normally be found at "C:\Program Files\Git" for modern 64 bit installs.~~
-
-~~Add this to Path to ensure the pre-commit hooks run successfully.~~
-
-Now using #!/usr/bin/env sh - I'm not sure how this syntax works cross platform and sh didn't but I think it's handled internally by git and not Windows, I would need to remove the PATH value though to verify this still works then. TBC.
-
  ## Help Us Improve This Documentation
 
  If you find that something is missing or have suggestions for improvements, please submit a PR.
