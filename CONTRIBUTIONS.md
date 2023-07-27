@@ -18,6 +18,10 @@
 
  TIP: If you're working on a GitHub issue, name your branch after the issue number, e.g. `issue-123-<ISSUE-NAME>`. This will help us keep track of what you're working on. If there is not an issue for what you're working on, create one first please. Someone else might be working on the same thing, or we might have a reason for not wanting to do it.
 
+## Some quick notes on code and command excerts
+
+- Where '`python`' is included within a command, you may need to swap out for your system's callable, such as '`python3`' for example. On windows you can simply type `py`. I like to install a more recent Python version than often comes with my Linux distribution by default and set an alias of `python` to point to it instead of the system default, if said system uses the legacy `python3` callable as its default.
+
  ## Venv
 
  As is best practice, you should install the project and its dependencies into a virtual environment and not your system wide Python installation.
@@ -42,6 +46,12 @@ To specify a unique or helpful prompt description when the venv is activated, cr
 Which will create a prompt looking like the below image which is helpful when jumping between terminal windows:
 
 ![Prompt with venv description](/docs_imgs/venv_with_prompt.PNG "venv w. prompt")
+
+Once you've configured your virtual environment as desired, install the development requirements prior to beginning any changes to the project to ensure pre-commits will work. This may save time later.
+
+    python -m pip install -r dev-requirements.txt
+
+(The above assumes you are currently within the isecapipy project root)
 
  ## Pre-commit
 
