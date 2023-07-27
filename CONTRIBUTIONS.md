@@ -41,7 +41,9 @@
 
 To specify a unique or helpful prompt description when the venv is activated, create it with the following syntax:
 
-    python -m venv .venv --prompt isecapipy
+ ```shell
+ python -m venv .venv --prompt isecapipy
+ ```
 
 Which will create a prompt looking like the below image which is helpful when jumping between terminal windows:
 
@@ -49,13 +51,18 @@ Which will create a prompt looking like the below image which is helpful when ju
 
 Once you've configured your virtual environment as desired, install the development requirements prior to beginning any changes to the project to ensure pre-commits will work. This may save time later.
 
-    python -m pip install -r dev-requirements.txt
+ ```shell
+ python -m pip install -r dev-requirements.txt
+ ```
 
 (The above assumes you are currently within the isecapipy project root)
 
+This installs all development requirements including `pre-commit`, however you still need to run the `pre-commit install` command to install the pre-commit hooks.
+
+
  ## Pre-commit
 
- GitHub Actions is going to run Pre-commit hooks on your PR. If the hooks fail, you will need to fix them before your PR can be merged. It will save you a lot of time if you run the hooks locally before you push your changes. To do that, you need to install pre-commit on your local machine.
+ GitHub Actions is going to run Pre-commit hooks on your PR. If the hooks fail, you will need to fix them before your PR can be merged. It will save you a lot of time if you run the hooks locally before you push your changes. To do that, you need to install pre-commit on your local machine. If not installed already via the 'dev-requirements.txt' file in the previous section, install it now with:
 
  ```shell
  pip install pre-commit
@@ -75,17 +82,19 @@ Once you've configured your virtual environment as desired, install the developm
  pre-commit run --all-files
  ```
 
-### Windows Users Extra Requirements
+### ~~Windows Users Extra Requirements~~
 
-On Windows, as bash is not installed natively, you may need to add your git/git bash Programs folder to your PATH environment variable for the scripts called by pre-commit to run.
+~~On Windows, as bash is not installed natively, you may need to add your git/git bash Programs folder to your PATH environment variable for the scripts called by pre-commit to run.~~
 
-The scripts start with the standard #!/usr/bin/sh 'shebang' line to tell the interpreter what program to use to run the scripts.
+~~The scripts start with the standard #!/usr/bin/sh 'shebang' line to tell the interpreter what program to use to run the scripts.~~
 
-Windows doesn't normally use these lines however your implimentation of git should, but for it to run properly, the location containing the /usr directory needs to be on PATH.
+~~Windows doesn't normally use these lines however your implimentation of git should, but for it to run properly, the location containing the /usr directory needs to be on PATH.~~
 
-For regular Git for Windows / Git Bash, this would normally be found at "C:\Program Files\Git" for modern 64 bit installs.
+~~For regular Git for Windows / Git Bash, this would normally be found at "C:\Program Files\Git" for modern 64 bit installs.~~
 
-Add this to Path to ensure the pre-commit hooks run successfully.
+~~Add this to Path to ensure the pre-commit hooks run successfully.~~
+
+Now using #!/usr/bin/env sh - I'm not sure how this syntax works cross platform and sh didn't but I think it's handled internally by git and not Windows, I would need to remove the PATH value though to verify this still works then. TBC.
 
  ## Help Us Improve This Documentation
 
