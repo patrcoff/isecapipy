@@ -8,6 +8,8 @@
  2. Changes that fix a current issue get priority for review.
  3. Check out [GitHub guide][submit-a-pr] if you've never created a pull request before.
 
+</br>
+
  ## Getting started
 
  1. Fork the repo
@@ -18,11 +20,17 @@
 
  TIP: If you're working on a GitHub issue, name your branch after the issue number, e.g. `issue-123-<ISSUE-NAME>`. This will help us keep track of what you're working on. If there is not an issue for what you're working on, create one first please. Someone else might be working on the same thing, or we might have a reason for not wanting to do it.
 
+</br>
+
 ## Some quick notes on code and command excerts
 
-- Where '`python`' is included within a command, you may need to swap out for your system's callable, such as '`python3`' for example. On windows you can simply type `py`. I like to install a more recent Python version than often comes with my Linux distribution by default and set an alias of `python` to point to it instead of the system default, if said system uses the legacy `python3` callable as its default.
+- Where '`python`' is included within a command in this document, you may need to swap out for your system's callable, such as '`python3`' for example. On Windows you can simply type `py`. I like to install a more recent Python version than often comes with my Linux distribution by default and set an alias of `python` to point to it instead of the system default, if said system uses the legacy `python3` callable as its default.
 
- ## Venv
+</br>
+
+## Develoment Requirements
+
+ ### Venv
 
  As is best practice, you should install the project and its dependencies into a virtual environment and not your system wide Python installation.
 
@@ -55,12 +63,13 @@ Once you've configured your virtual environment as desired, install the developm
  python -m pip install -r dev-requirements.txt
  ```
 
-(The above assumes you are currently within the isecapipy project root)
+(The above assumes you are currently within the isecapipy project root - otherwise editable install of local project will fail, which in turn would cause the tests to fail)
 
 This installs all development requirements including `pre-commit`, however you still need to run the `pre-commit install` command to install the pre-commit hooks.
 
+----
 
- ## Pre-commit
+ ### Pre-commit
 
  GitHub Actions is going to run Pre-commit hooks on your PR. If the hooks fail, you will need to fix them before your PR can be merged. It will save you a lot of time if you run the hooks locally before you push your changes. To do that, you need to install pre-commit on your local machine. If not installed already via the 'dev-requirements.txt' file in the previous section, install it now with:
 
@@ -81,6 +90,19 @@ This installs all development requirements including `pre-commit`, however you s
  ```shell
  pre-commit run --all-files
  ```
+
+ ----
+
+ ### Testing
+
+In order for a PR to be accepted, all code added to the project should be covered with Pytest tests, which will run during the pre-commit hooks.
+
+Tests exist in the `projectroot/tests` directory as is fairly standard and can import the module as an end user would with '`import isecapipy`' due to the use of the [editable install](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) of the project within the 'dev-requirement.txt' file.
+
+As best practice, it is a good idea to keep tests segmented into numerous files so that contributors do not end up often editing the same files which will help reduce the likelihood of conflicts when merging. It also helps devs quickly see which test files are relevant to a given piece of code. Take care to name test files and functions with good descriptive names clearly outlining their purpose. I do not personally encourage the use of class based tests. For more guidance on testing, see [Pytest's ](https://docs.pytest.org/en/7.4.x/) own documentation or search for a suitable tutorial online. I make fairly basic us of testing but simple Pytests can go a long way!
+
+
+</br></br>
 
  ## Help Us Improve This Documentation
 
