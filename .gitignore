@@ -156,3 +156,6 @@ private-notes.txt
 
 # experimentation, tests and scripts specific to a given local dev environment
 access_isec_via_ssh_tunnel.py
+
+#git graph
+*.dot*

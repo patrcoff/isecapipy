@@ -1,7 +1,4 @@
-bs4
-pylint
-black
-requests
-pytest
-requests-ntlm
+requests>=2.28.2
+requests-ntlm>=1.2.0
+pydantic>=2.0.3
 requests-kerberos
