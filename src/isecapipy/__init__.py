@@ -2,19 +2,7 @@
 
 # ruff: noqa: F401
 
-from .api_mapping import (
-    placeholder,
-    Links,
-    FrameworkVersion,
-    AgentDetail,
-    AgentDeployStatus,
-    AgentDeploymentStatus,
-    AgentPolicyTask,
-    AgentStatus,
-    AgentTaskState,
-    SuccessCode,
-    ExecutedTask,
-    QueuedTask,
-)
+from .api_mapping import uris
+from .response_models import response_models as ResponseModels
 
 from .__main__ import manage

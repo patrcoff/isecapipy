@@ -1,134 +1,11 @@
 """This is a placeholder module docstring"""
 
-from datetime import datetime
-from typing import List, Dict
-from pydantic import BaseModel
+from .response_models import response_models as ResponseModels
 
 
 def placeholder():
     """This is a placeholder function to test importing structure"""
     return True
-
-
-class Links(BaseModel):
-    """The REST API data model for Links objects"""
-
-    value: Dict[str, Dict[str, str]]
-
-
-class FrameworkVersion(BaseModel):
-    """The REST API data model for FrameworkVersion (from AgentDetial->AgentStatus)"""
-
-    major: int
-    minor: int
-    build: int
-    revision: int
-    majorRevision: int
-    minorRevision: int
-
-
-class AgentDetail(BaseModel):
-    """The REST API data model for AgentDetail"""
-
-    agentId: str
-    assignedPolicyId: str
-    dnsName: str
-    domain: str
-    frameworkVersion: str
-    isListening: bool
-    lastCheckIn: datetime
-    lastKnownIPAddress: str
-    links: Dict[str, Dict[str, str]]
-    listeningPort: int
-    machineName: str
-    reportedPolicyId: str
-    status: str  # is enum in docs
-
-
-class AgentStatus(BaseModel):
-    """The REST API data model for Agent Status"""
-
-    agentId: str
-    frameworkVersion: FrameworkVersion
-    installedPackages: List[str]
-    lastCheckIn: datetime
-    links: Dict[str, Dict[str, str]]
-    machineName: str
-    reportedOn: datetime
-    runningPolicyId: str  # guid
-    runningPolicyVersion: int  # this says Uint32 in rest docs but probably fine
-
-
-class SuccessCode(BaseModel):
-    """The REST API data model for SuccessCode"""
-
-    code: int
-    description: str
-
-
-class AgentDeployStatus(BaseModel):
-    """The REST API data model for AgentDeployStatus
-    Really annoyingly the isec docs use AgentStatus multiple times to mean different responses
-    This is called AgentStatus in the agent deployments endpoint doc page, but has been changed
-    to avoid clashing. There also seems to be a lot of redundancy in this endpoint..."""
-
-    error: str
-    id: str
-    name: str
-    percentComplete: int
-    status: str
-    statusTime: datetime
-
-
-class AgentDeploymentStatus(BaseModel):
-    """The REST API data model for Agent Deployment Status"""
-
-    agentStatuses: AgentDeployStatus
-    created: datetime
-    Error: str
-    links: Links
-    percentComplete: int
-    Status: str
-
-
-class AgentPolicyTask(BaseModel):
-    """The REST API data model for Agent Policy Task"""
-
-    agentId: str
-    links: Dict[str, Dict[str, str]]
-    taskId: str
-    taskName: str
-    taskType: str  # (enum)
-
-
-class ExecutedTask(BaseModel):
-    """The REST API data model for an executed Task"""
-
-    agentId: str
-    executingTaskId: str
-    links: Dict[str, Dict[str, str]]
-
-
-class AgentTaskState(BaseModel):
-    """The REST API data model for an agent Task's state"""
-
-    canCancel: bool
-    commandLine: str
-    endTime: datetime
-    engineId: str
-    hasArgument: bool
-    identifier: str
-    operationId: str
-    startTime: datetime
-
-
-class QueuedTask(BaseModel):
-    """The REST API data model for a Queued Task"""
-
-    agentId: str
-    executingTaskId: str
-    links: Dict[str, Dict[str, str]]
-    taskStatus: AgentTaskState
 
 
 uris = {
@@ -145,17 +22,17 @@ uris = {
                         "Start": {"type": int, "default": None},
                     },
                 ],
-                "return": AgentDetail,  # this needs expanded into a return data class
+                "return": ResponseModels.AgentDetail,  # this needs expanded into a return data class
             },
             "agent": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}",
                 "params": None,
-                "return": AgentDetail,  # this needs expanded into a return data class
+                "return": ResponseModels.AgentDetail,  # this needs expanded into a return data class
             },
             "status": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}/status",
                 "params": None,
-                "return": AgentStatus,  # this needs expanded into a return data class
+                "return": ResponseModels.AgentStatus,  # this needs expanded into a return data class
             },
         },
         "put": {
@@ -163,7 +40,7 @@ uris = {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}/policy",
                 "params": None,
                 "request_body": {"policyId": str, "checkin": bool},
-                "return": SuccessCode,
+                "return": ResponseModels.SuccessCode,
             }
         },
         "delete": {
@@ -171,7 +48,7 @@ uris = {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}",
                 "params": None,
                 "request_body": {"policyId": str, "checkin": bool},
-                "return": SuccessCode,
+                "return": ResponseModels.SuccessCode,
             }
         },
         "post": None,
@@ -186,7 +63,7 @@ uris = {
                 "deployment/{agentdeployment ID}",
                 "params": None,
                 "request_body": None,
-                "response": AgentDeploymentStatus,
+                "response": ResponseModels.AgentDeploymentStatus,
             }
         },
         "post": {
@@ -212,7 +89,7 @@ uris = {
                     "sshServerValidationMode": {"required": False},
                     "useMachineCredentialId": {"required": False},
                 },
-                "response": SuccessCode,  # links to operations in header of response...
+                "response": ResponseModels.SuccessCode,  # links to operations in header of response...
             }
         },
     },
@@ -225,21 +102,21 @@ uris = {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}/tasks",
                 "params": None,
                 "request_body": None,
-                "response": AgentPolicyTask,
+                "response": ResponseModels.AgentPolicyTask,
             },
             "executedTask": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}"
                 "/queuedTask",
                 "params": None,
                 "request_body": None,
-                "response": ExecutedTask,
+                "response": ResponseModels.ExecutedTask,
             },
             "queuedTask": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}"
                 "/queuedTask/{queuedTaskId}",
                 "params": None,
                 "request_body": None,
-                "response": QueuedTask,
+                "response": ResponseModels.QueuedTask,
             },
         },
         "post": {
@@ -248,14 +125,14 @@ uris = {
                 "/checkin",
                 "params": None,
                 "request_body": None,
-                "response": SuccessCode,
+                "response": ResponseModels.SuccessCode,
             },
             "taskById": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}"
                 "/tasks/{taskId}",
                 "params": None,
                 "request_body": None,
-                "response": ExecutedTask,
+                "response": ResponseModels.ExecutedTask,
             },
         },
         "delete": {
@@ -264,7 +141,7 @@ uris = {
                 "/queuedTask{queuedTaskId}",
                 "params": None,
                 "request_body": None,
-                "response": SuccessCode,
+                "response": ResponseModels.SuccessCode,
             }
         },
         "put": None,

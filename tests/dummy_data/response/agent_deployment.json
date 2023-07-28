@@ -1,0 +1,21 @@
+{
+    "agentStatuses": [
+        {
+            "error": {
+                "message": "Access is denied"
+            },
+            "name": "UWM-W10-01",
+            "percentComplete": 100,
+            "status": "DeployFailed",
+            "statusTime": "2023-07-28T16:23:45.4627324Z"
+        }
+    ],
+    "created": "2023-07-28T16:23:44.7282711Z",
+    "links": {
+        "self": {
+            "href": "https://uwm-isec-01.uwm.local:3121/st/console/api/v1.0/agents/deployment/c45d1a7e-88ea-4610-89d8-a4dd6b57d7f7"
+        }
+    },
+    "percentComplete": 100,
+    "status": "Succeeded"
+}

@@ -4,10 +4,6 @@ import pytest
 import isecapipy
 
 
-def test_placeholder():
-    assert isecapipy.placeholder()
-
-
 def test_main():
     assert isecapipy.__main__.main() is None
 
