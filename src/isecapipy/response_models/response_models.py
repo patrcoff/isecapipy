@@ -242,10 +242,11 @@ class ServiceCredential(BaseModel):
     name: str
     username: str
 
+    # the Ivanti docs don't seem to show where this model is returned from
+    # so will need to be confirmed in testing
 
-class UserCredentialShares(
-    BaseModel
-):  # the Ivanti docs don't seem to show where this model is returned from so will need to be confirmed in testing
+
+class UserCredentialShares(BaseModel):
     """The REST API data model for the credentials endpoint - user credential shares"""
 
     propogateUsagePolicy: str  # ENUM
@@ -351,7 +352,9 @@ class LinuxPatchMetadata(BaseModel):
     links: Dict[str, Dict[str, str]]
     name: str
     notifications: str
-    packages: str  # likelyt an undocumented data class - needs tested. Architecture, name, packageUpdated, packageVersion, productId
+    packages: str
+    # above is likely an undocumented data class - needs tested.
+    # Architecture, name, packageUpdated, packageVersion, productId
     patchId: str
     patchTypeSeverity: str  # Enum
     platformEditions: str
