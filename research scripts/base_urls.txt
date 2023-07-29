@@ -29,3 +29,36 @@
 'base_url': {'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/sessioncredentials'}
 'base_url': {'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/users'}
 'base_url': {'href': 'https://<consoleFQDN:port>/st/console/api/v1.0/virtual'}
+
+
+/agents
+/agents/deployment
+/agenttasks
+/asset/scantemplates
+/cloudsync
+/configuration
+/credentials
+/distributionservers
+/ipranges
+/linux/patch/deploymentconfigurations
+/linux/patch/groups
+/linux/patch/scanconfigurations
+/linux/patchmetadata
+/machinegroups
+/machines
+/metadata/vendors
+/operations
+/patch/deployments
+/patch/deploytemplates
+/patch/downloads
+/patch/groups
+/patch/patchmetadata
+/patch/productlevelgroups
+/patch/scanTemplates
+/patch/scans
+/patches
+/policies
+/servicecredentials
+/sessioncredentials
+/users
+/virtual

@@ -150,7 +150,7 @@ class AssetScanWmiOption(BaseModel):
     enabled: bool
 
 
-class OpenAssetScanTemplate(BaseModel):
+class AssetScanTemplate(BaseModel):
     """The REST API data model for an asset scan template"""
 
     configurations: List[AssetScanWmiOption]
@@ -364,3 +364,18 @@ class LinuxPatchMetadata(BaseModel):
 
 
 # Linux Patch Scan Configuration ------------------------------------
+
+
+# NOT IMPLIMENTED OR NEEDS TESTING (ISEC DOCS INCOMPLETE)
+
+
+class NotImplementedModel:
+    """A placeholder for models not yet implemented"""
+
+    def __init__(self, *args, **kwargs) -> None:
+        message = (
+            f"You passed args and kwargs\n{args}\n{kwargs}"
+            / "into a model which isn't implimented yet"
+        )
+
+        raise TypeError(message)
