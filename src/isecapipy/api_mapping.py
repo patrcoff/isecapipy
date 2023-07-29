@@ -22,17 +22,17 @@ uris = {
                         "Start": {"type": int, "default": None},
                     },
                 ],
-                "return": ResponseModels.AgentDetail,  # this needs expanded into a return data class
+                "return": ResponseModels.AgentDetail,
             },
             "agent": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}",
                 "params": None,
-                "return": ResponseModels.AgentDetail,  # this needs expanded into a return data class
+                "return": ResponseModels.AgentDetail,
             },
             "status": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}/status",
                 "params": None,
-                "return": ResponseModels.AgentStatus,  # this needs expanded into a return data class
+                "return": ResponseModels.AgentStatus,
             },
         },
         "put": {
@@ -89,7 +89,8 @@ uris = {
                     "sshServerValidationMode": {"required": False},
                     "useMachineCredentialId": {"required": False},
                 },
-                "response": ResponseModels.SuccessCode,  # links to operations in header of response...
+                "response": ResponseModels.SuccessCode,
+                # links to operations in header of response...
             }
         },
     },
