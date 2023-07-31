@@ -254,7 +254,7 @@ uris = {
             },
             "credentialShare": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/"
-                / "{credential id}/share",
+                "{credential id}/share",
                 "params": None,
                 "request_body": None,
                 "response": list,
@@ -268,7 +268,7 @@ uris = {
             },
             "serviceCredential": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/"
-                / "servicecredentials/{servicecredentialId}",
+                "servicecredentials/{servicecredentialId}",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.ServiceCredential
@@ -296,7 +296,7 @@ uris = {
             },
             "credentialShareWithService": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/"
-                / "credentials/{credential id}/sharewithservice",
+                "credentials/{credential id}/sharewithservice",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.SuccessCode,

@@ -1,8 +1,8 @@
 """The Pydantic Models for the ISEC REST API request bodies (JSON)"""
 
 from datetime import datetime
-from typing import List, Dict
-from pydantic import BaseModel, Optional
+from typing import List, Dict, Optional
+from pydantic import BaseModel
 
 # AGENTS ------------------------------------------------------------
 
