@@ -11,8 +11,8 @@ class Agents(BaseModel):
     """The REST API request body model for AGENTS
     Applies to DELETE and PUT requests"""
 
-    policyId: Optional[str]
-    checkIn: Optional[bool]
+    policyId: Optional[str] = None
+    checkIn: Optional[bool] = None
 
 
 # AGENT DEPLOYMENTS -------------------------------------------------
@@ -22,16 +22,16 @@ class AgentDeployment(BaseModel):
     """The REST API request body model for Agent deployments
     Applies to POST requests"""
 
-    assignedGroup: Optional[str]
-    connectionMethod: Optional[str]  # ENUM
-    credentialId: Optional[str]
-    endpointNames: Optional[str]  # I assume this is actually a list...
-    machineGroupIds: Optional[List[int]]
+    assignedGroup: Optional[str] = None
+    connectionMethod: Optional[str] = None  # ENUM
+    credentialId: Optional[str] = None
+    endpointNames: Optional[str] = None  # I assume this is actually a list...
+    machineGroupIds: Optional[List[int]] = None
     policyId: str
     sshServerValidationMode: Optional[
         str
-    ]  # Enum -  Blocked or SkipServerAuthentication
-    useMachineCredentialId: Optional[bool]
+    ] = None  # Enum -  Blocked or SkipServerAuthentication
+    useMachineCredentialId: Optional[bool] = None
 
 
 # AGENT TASKS -------------------------------------------------------
@@ -67,7 +67,7 @@ class CredentialsShare(BaseModel):
     """The REST API request body for credentials - share body
     Applies to DELETE, POST and PUT"""
 
-    propogateUsagePolicy: Optional[str]  # ENUM - Throw, Overwrite
+    propogateUsagePolicy: Optional[str] = None  # ENUM - Throw, Overwrite
     propogateUsages: bool
     shareWithService: bool
     usernames: List[str]
@@ -88,7 +88,9 @@ class Password(BaseModel):
 
     cipherText: str
     clearText: str
-    protectionMode: Optional[str]  # ENUM - None(default), Local DPApi, SessionKey
+    protectionMode: Optional[
+        str
+    ] = None  # ENUM - None(default), Local DPApi, SessionKey
     sessionKey: SessionKey
 
 
@@ -125,8 +127,8 @@ class LinuxDeployConfig(BaseModel):
     """The REST API request body for linux deployment configs.
     Used by POST, PUT"""
 
-    description: Optional[str]
-    options: Optional[LinuxPatchDerploymentOptions]
+    description: Optional[str] = None
+    options: Optional[LinuxPatchDerploymentOptions] = None
     name: str
     path: str
 
@@ -137,22 +139,22 @@ class LinuxDeployConfig(BaseModel):
 class LinuxPatches(BaseModel):
     """The REST API request body for linux patches"""
 
-    errorPolicy: Optional[str]  #  ENUM Throw, Omit
-    patchIds: List[str]  # GUIDS of the patches...
+    errorPolicy: Optional[str] = None  #  ENUM Throw, Omit
+    patchIds: List[str] = None  # GUIDS of the patches...
 
 
 class LinuxCVEs(BaseModel):
     """The REST API request body for linux CVEs"""
 
     cves: List[str]  # cve ids, not names
-    errorPolicy: Optional[str]  # ENUM- Throw, Omit
+    errorPolicy: Optional[str] = None  # ENUM- Throw, Omit
 
 
 class LinuxPatchGroup(BaseModel):
     """The REST API  for Linux patch groups"""
 
     name: str
-    path: Optional[str]
+    path: Optional[str] = None
 
 
 # Linux Patch Metadata --------------------------------------------------
@@ -182,7 +184,7 @@ class LinuxPatchScanConfig:
     """The REST API request body for Linux patch scan configs
     Applies to Post, PUT"""
 
-    description: Optional[str]
-    filter: Optional[LinuxPatchScanFilter]  # required for PUT
+    description: Optional[str] = None
+    filter: Optional[LinuxPatchScanFilter] = None  # required for PUT
     name: str
-    path: Optional[str]
+    path: Optional[str] = None

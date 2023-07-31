@@ -14,7 +14,7 @@ uris = {
     "AGENTS": {
         "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents"},
         "get": {
-            "agents": {
+            "all": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents",
                 "params": [
                     {"count": {"type": int, "default": 100}},
@@ -24,21 +24,24 @@ uris = {
                         "Start": {"type": int, "default": None},
                     },
                 ],
+                "request_body": None,
                 "return": ResponseModels.AgentDetail,
             },
-            "agent": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}",
                 "params": None,
+                "request_body": None,
                 "return": ResponseModels.AgentDetail,
             },
             "status": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}/status",
                 "params": None,
+                "request_body": None,
                 "return": ResponseModels.AgentStatus,
             },
         },
         "put": {
-            "agent_policy": {
+            "policy": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}/policy",
                 "params": None,
                 "request_body": RequestModels.Agents,
@@ -46,7 +49,7 @@ uris = {
             }
         },
         "delete": {
-            "agent": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}",
                 "params": None,
                 "request_body": RequestModels.Agents,
@@ -60,7 +63,7 @@ uris = {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment"
         },
         "get": {
-            "deployment": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/"
                 "deployment/{agentdeployment ID}",
                 "params": None,
@@ -69,7 +72,7 @@ uris = {
             }
         },
         "post": {
-            "deployment": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment",
                 "params": None,
                 "request_body": RequestModels.AgentDeployment,
@@ -83,7 +86,7 @@ uris = {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks"
         },
         "get": {
-            "tasks": {
+            "all": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}/tasks",
                 "params": None,
                 "request_body": None,
@@ -136,26 +139,28 @@ uris = {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates"
         },
         "get": {
-            "scanTemplates": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates",
-                "params": [
-                    {"count": {"type": int, "default": 10}},
-                    {
-                        "createdByMe": {"type": bool, "default": None}
-                    },  # to be depracated soon
-                    {"name": {"type": str, "default": None}},
-                    {"start": {"type": int, "default": None}},
-                ],
-                "request_body": None,
-                "response": (list, ResponseModels.AssetScanTemplate),
+            "templates": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates",
+                    "params": [
+                        {"count": {"type": int, "default": 10}},
+                        {
+                            "createdByMe": {"type": bool, "default": None}
+                        },  # to be depracated soon
+                        {"name": {"type": str, "default": None}},
+                        {"start": {"type": int, "default": None}},
+                    ],
+                    "request_body": None,
+                    "response": ResponseModels.ListAssetScanTemplate,
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.NotImplementedModel,
+                },
             },
-            "scanTemplate": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}",
-                "params": None,
-                "request_body": None,
-                "response": ResponseModels.NotImplementedModel,
-            },
-            "scantemplateUsedBy": {
+            "UsedBy": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}/usedby",
                 "params": None,
                 "request_body": None,
@@ -169,40 +174,46 @@ uris = {
         },
         "get": {
             "activationKeys": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys",
-                "params": None,
-                "request_body": None,
-                "response": (list, ResponseModels.AgentActivationKey),
-            },
-            "activationKey": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys{keyId}",
-                "params": None,
-                "request_body": None,
-                "response": ResponseModels.AgentActivationKey,
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.ListAgentActivationKey,
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys{keyId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.AgentActivationKey,
+                },
             },
             "consoles": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles",
-                "params": None,
-                "request_body": None,
-                "response": (list, ResponseModels.ConsoleInformation),
-            },
-            "console": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}",
-                "parms": None,
-                "request_body": None,
-                "response": ResponseModels.ConsoleInformation,
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles",
+                    "params": None,
+                    "request_body": None,
+                    "response": (list, ResponseModels.ConsoleInformation),
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}",
+                    "parms": None,
+                    "request_body": None,
+                    "response": ResponseModels.ConsoleInformation,
+                },
             },
             "policies": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies",
-                "params": None,
-                "request_body": None,
-                "response": (list, ResponseModels.PolicyInformation),
-            },
-            "policy": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies/{policyId}",
-                "params": None,
-                "request_body": None,
-                "response": ResponseModels.PolicyInformation,
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies",
+                    "params": None,
+                    "request_body": None,
+                    "response": (list, ResponseModels.PolicyInformation),
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies/{policyId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.PolicyInformation,
+                },
             },
         },
         "post": {

@@ -50,6 +50,6 @@ def test_agent_deployment():
     with open("./tests/dummy_data/response/agent_deployment.json", "r") as deployment:
         deployment = json.load(deployment)
         assert isinstance(
-            isecapipy.ResponseModels.AgentDeployStatus(**deployment),
-            isecapipy.ResponseModels.AgentDeployStatus,
+            isecapipy.ResponseModels.AgentDeploymentStatus(**deployment),
+            isecapipy.ResponseModels.AgentDeploymentStatus,
         )

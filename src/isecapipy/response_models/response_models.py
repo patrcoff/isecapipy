@@ -1,7 +1,7 @@
 """The Pydantic Models for the ISEC REST API responses"""
 
 from datetime import datetime
-from typing import List, Dict
+from typing import List, Dict, Optional
 from pydantic import BaseModel
 
 #  Shared ----------------------------------------------------------
@@ -69,8 +69,8 @@ class AgentDeployStatus(BaseModel):
     This is called AgentStatus in the agent deployments endpoint doc page, but has been changed
     to avoid clashing. There also seems to be a lot of redundancy in this endpoint..."""
 
-    error: str
-    id: str
+    error: str | Dict[str, str]
+    id: Optional[str] = None
     name: str
     percentComplete: int
     status: str
@@ -80,12 +80,12 @@ class AgentDeployStatus(BaseModel):
 class AgentDeploymentStatus(BaseModel):
     """The REST API data model for Agent Deployment Status"""
 
-    agentStatuses: AgentDeployStatus
+    agentStatuses: List[AgentDeployStatus]
     created: datetime
-    Error: str
+    # Error: str | Dict[str,str]
     links: Dict[str, Dict[str, str]]
     percentComplete: int
-    Status: str
+    status: str
 
 
 #  Agent Tasks -----------------------------------------------------
@@ -164,6 +164,14 @@ class AssetScanTemplate(BaseModel):
     name: str
 
 
+class ListAssetScanTemplate(BaseModel):
+    """The REST API returns a list of asset scan template objects in this form"""
+
+    count: int
+    links: Dict[str, Dict[str, str]]
+    value: List[AssetScanTemplate]
+
+
 #  Cloud Sync ------------------------------------------------------
 
 
@@ -183,6 +191,16 @@ class AgentActivationKey(BaseModel):
     notOnOrAfter: datetime
     policyId: str
     policyName: str
+
+
+class ListAgentActivationKey(BaseModel):
+    """The REST API returns a list of agent activation keys in this form"""
+
+    # cannot repro in lab atm - need to register with cloud
+    # likely contains count and links
+    count: Optional[int] = None
+    links: Optional[Dict[str, Dict[str, str]]] = None
+    value: List[AgentActivationKey]
 
 
 class ConsoleInformation(BaseModel):
