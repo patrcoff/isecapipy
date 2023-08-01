@@ -83,7 +83,7 @@ def select_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwarg
         endpoints = [x for x in endpoints if "one" in x[0]]
 
     # -------------- END FILTERING VIA COMPREHENSIONS ------------------#
-    # filtering now is addative instead of subtractive... this is important to note
+    # filtering now is selective instead of subtractive... this is important to note
 
     replacement = []
 
