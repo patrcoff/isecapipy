@@ -1,3 +1,5 @@
+"""This module provides functionality required in generating URIs based on user given parameters."""
+
 from .api_mapping import uris
 
 
@@ -32,13 +34,15 @@ class NoURIsFound(Exception):
 
 
 def get_endpoints(urls, parents=[], depth=0):
+    """This function generates individual endpoints from the uris dict."""
+
     if urls:
         for key, val in urls.items():
             parents = parents[:depth]
             if key == "base_url":
                 continue
 
-            elif val and "href" in val.keys():
+            if val and "href" in val.keys():
                 parents.append(key)
                 yield parents, val
 
@@ -53,8 +57,26 @@ def get_endpoints(urls, parents=[], depth=0):
         return
 
 
-def inject_params():
-    pass
+def inject_params(endp, kwargs):
+    """This function takes in the selected uri and injects uri parameters."""
+    generated_uri = endp["href"]
+    for key, val in kwargs.items():
+        if f"{{key}}" in endp["href"]:
+            endp["href"].replace(key, val)
+            endp["href"].replace("{", "")
+            endp["href"].replace("}", "")
+        if endp["params"]:
+            if "?" not in generated_uri:
+                generated_uri += "?"
+            for param in endp["params"]:
+                if key in param:
+                    if (
+                        "=" in generated_uri
+                    ):  # if there is already at least one url param
+                        generated_uri += "&"  # then you need to separate them with &
+                    generated_uri += f"{key}={val}"
+
+    return generated_uri
 
 
 def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwargs):
@@ -65,7 +87,7 @@ def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwa
     injecting the relevant parameters into the returned uri.
     """
 
-    endpoints = [x for x in get_endpoints(urls=uris)]
+    endpoints = list(get_endpoints(urls=uris))
 
     if endpoint:
         endpoints = [x for x in endpoints if x[0][0] == endpoint]
@@ -76,10 +98,10 @@ def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwa
     if sub_endpoint:
         endpoints = [x for x in endpoints if x[0][2] == sub_endpoint]
 
-    if mult == True:
+    if mult is True:
         endpoints = [x for x in endpoints if "all" in x[0]]
 
-    if mult == False:
+    if mult is False:
         endpoints = [x for x in endpoints if "one" in x[0]]
 
     # -------------- END FILTERING VIA COMPREHENSIONS ------------------#
@@ -87,7 +109,7 @@ def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwa
 
     replacement = []
 
-    for key, val in kwargs.items():
+    for key in kwargs:
         for endp in endpoints:
             if f"{{key}}" in endp[1]["href"] and endp not in replacement:
                 replacement.append(endp)
@@ -102,34 +124,12 @@ def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwa
         # replacement = list({s for s in replacement})
         endpoints = replacement
 
-    # after this point, we would ideally have a list of 1 URIs, and we can inject params if applicable
+    # we now have ideally a list of only one URI to work with
 
     if len(endpoints) == 1:
-        endp = endpoints[0][1]
-        generated_uri = endp["href"]
-        for key, val in kwargs.items():
-            if f"{{key}}" in endp["href"]:
-                endp["href"].replace(key, val)
-                endp["href"].replace("{", "")
-                endp["href"].replace("}", "")
-            if endp["params"]:
-                if "?" not in generated_uri:
-                    generated_uri += "?"
-                for param in endp["params"]:
-                    if key in param:
-                        if (
-                            "=" in generated_uri
-                        ):  # if there is already at least one url param
-                            generated_uri += (
-                                "&"  # then you need to separate them with &
-                            )
-                        generated_uri += f"{key}={val}"
+        return inject_params(endpoints[0][1], kwargs)
 
-        return generated_uri
-
-        # return endpoints[0][1]["href"]
-
-    elif len([x for x in endpoints]) > 1:
+    if len(endpoints) > 1:
         names = [x[1]["href"] for x in endpoints]
         raise NonUniqueFilter(
             f"Unable to determine unique endpoint URI from provided "
@@ -141,10 +141,9 @@ def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwa
             f"{names}"
         )
 
-    else:
-        raise NoURIsFound(
-            f"No endpoints found matching applied filters: "
-            f"arguments:\n\n"
-            f"endpoint={endpoint}\nmethod={method}\nsub_endpoint={sub_endpoint}"
-            f"\nmult={mult}\nparameters={kwargs}"
-        )
+    raise NoURIsFound(
+        f"No endpoints found matching applied filters: "
+        f"arguments:\n\n"
+        f"endpoint={endpoint}\nmethod={method}\nsub_endpoint={sub_endpoint}"
+        f"\nmult={mult}\nparameters={kwargs}"
+    )
