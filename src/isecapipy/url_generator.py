@@ -57,7 +57,7 @@ def inject_params():
     pass
 
 
-def select_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwargs):
+def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwargs):
     """This function attempts to return a unique URI for an ISEC REST API endpoint
 
     It takes in the string name of the endpoint, HTTP method, sub_endpoint, mult and kwargs
@@ -89,21 +89,45 @@ def select_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwarg
 
     for key, val in kwargs.items():
         for endp in endpoints:
-            if key in endp[1]["href"]:
+            if f"{{key}}" in endp[1]["href"] and endp not in replacement:
                 replacement.append(endp)
             else:
                 if "params" in endp[1].keys():
                     if endp[1]["params"]:
                         for param in endp[1]["params"]:
-                            if key in param:
+                            if key in param and endp not in replacement:
                                 replacement.append(endp)
+
     if len(replacement) > 0:
+        # replacement = list({s for s in replacement})
         endpoints = replacement
 
     # after this point, we would ideally have a list of 1 URIs, and we can inject params if applicable
 
     if len(endpoints) == 1:
-        return endpoints[0][1]["href"]
+        endp = endpoints[0][1]
+        generated_uri = endp["href"]
+        for key, val in kwargs.items():
+            if f"{{key}}" in endp["href"]:
+                endp["href"].replace(key, val)
+                endp["href"].replace("{", "")
+                endp["href"].replace("}", "")
+            if endp["params"]:
+                if "?" not in generated_uri:
+                    generated_uri += "?"
+                for param in endp["params"]:
+                    if key in param:
+                        if (
+                            "=" in generated_uri
+                        ):  # if there is already at least one url param
+                            generated_uri += (
+                                "&"  # then you need to separate them with &
+                            )
+                        generated_uri += f"{key}={val}"
+
+        return generated_uri
+
+        # return endpoints[0][1]["href"]
 
     elif len([x for x in endpoints]) > 1:
         names = [x[1]["href"] for x in endpoints]
@@ -113,7 +137,8 @@ def select_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwarg
             f"endpoint={endpoint}\nmethod={method}\nsub_endpoint={sub_endpoint}"
             f"\nmult={mult}\nparameters={kwargs}"
             f"\n\nURIs remaining in filter:"
-            f"{len(names)}"
+            # f"{len(names)}"
+            f"{names}"
         )
 
     else:
