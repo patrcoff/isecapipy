@@ -33,8 +33,11 @@ class NoURIsFound(Exception):
         super().__init__(f"self.message\n\n{params}")
 
 
-def get_endpoints(urls, parents=[], depth=0):
+def get_endpoints(urls, parents=None, depth=0):
     """This function generates individual endpoints from the uris dict."""
+
+    if not parents:
+        parents = []
 
     if urls:
         for key, val in urls.items():
@@ -61,7 +64,7 @@ def inject_params(endp, kwargs):
     """This function takes in the selected uri and injects uri parameters."""
     generated_uri = endp["href"]
     for key, val in kwargs.items():
-        if f"{{key}}" in endp["href"]:
+        if f"{ {key} }" in endp["href"]:
             endp["href"].replace(key, val)
             endp["href"].replace("{", "")
             endp["href"].replace("}", "")
@@ -79,7 +82,9 @@ def inject_params(endp, kwargs):
     return generated_uri
 
 
-def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwargs):
+def generate_uri(
+    endpoint=None, method=None, sub_endpoint=None, mult=None, **kwargs
+):  # pylint: disable=too-many-branches
     """This function attempts to return a unique URI for an ISEC REST API endpoint
 
     It takes in the string name of the endpoint, HTTP method, sub_endpoint, mult and kwargs
@@ -109,9 +114,9 @@ def generate_uri(endpoint=None, method=None, sub_endpoint=None, mult=None, **kwa
 
     replacement = []
 
-    for key in kwargs:
+    for key in kwargs:  # pylint: disable=too-many-nested-blocks
         for endp in endpoints:
-            if f"{{key}}" in endp[1]["href"] and endp not in replacement:
+            if f"{ {key} }" in endp[1]["href"] and endp not in replacement:
                 replacement.append(endp)
             else:
                 if "params" in endp[1].keys():
