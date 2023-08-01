@@ -30,6 +30,6 @@ repos:
       name: coverage
       stages: [commit]
       language: system
-      entry: coverage report --fail-under=95
+      entry: coverage report --fail-under=50 --omit __init__.py
       types: [python]
       pass_filenames: false

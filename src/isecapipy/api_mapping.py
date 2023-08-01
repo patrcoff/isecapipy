@@ -1,8 +1,8 @@
 """This is a placeholder module docstring"""
 
-from datetime import datetime
-from typing import List, Dict
-from pydantic import BaseModel
+from .response_models import response_models as ResponseModels
+from .request_body_models import request_body_models as RequestModels
+from typing import List
 
 
 def placeholder():
@@ -10,168 +10,48 @@ def placeholder():
     return True
 
 
-class Links(BaseModel):
-    """The REST API data model for Links objects"""
-
-    value: Dict[str, Dict[str, str]]
-
-
-class FrameworkVersion(BaseModel):
-    """The REST API data model for FrameworkVersion (from AgentDetial->AgentStatus)"""
-
-    major: int
-    minor: int
-    build: int
-    revision: int
-    majorRevision: int
-    minorRevision: int
-
-
-class AgentDetail(BaseModel):
-    """The REST API data model for AgentDetail"""
-
-    agentId: str
-    assignedPolicyId: str
-    dnsName: str
-    domain: str
-    frameworkVersion: str
-    isListening: bool
-    lastCheckIn: datetime
-    lastKnownIPAddress: str
-    links: Dict[str, Dict[str, str]]
-    listeningPort: int
-    machineName: str
-    reportedPolicyId: str
-    status: str  # is enum in docs
-
-
-class AgentStatus(BaseModel):
-    """The REST API data model for Agent Status"""
-
-    agentId: str
-    frameworkVersion: FrameworkVersion
-    installedPackages: List[str]
-    lastCheckIn: datetime
-    links: Dict[str, Dict[str, str]]
-    machineName: str
-    reportedOn: datetime
-    runningPolicyId: str  # guid
-    runningPolicyVersion: int  # this says Uint32 in rest docs but probably fine
-
-
-class SuccessCode(BaseModel):
-    """The REST API data model for SuccessCode"""
-
-    code: int
-    description: str
-
-
-class AgentDeployStatus(BaseModel):
-    """The REST API data model for AgentDeployStatus
-    Really annoyingly the isec docs use AgentStatus multiple times to mean different responses
-    This is called AgentStatus in the agent deployments endpoint doc page, but has been changed
-    to avoid clashing. There also seems to be a lot of redundancy in this endpoint..."""
-
-    error: str
-    id: str
-    name: str
-    percentComplete: int
-    status: str
-    statusTime: datetime
-
-
-class AgentDeploymentStatus(BaseModel):
-    """The REST API data model for Agent Deployment Status"""
-
-    agentStatuses: AgentDeployStatus
-    created: datetime
-    Error: str
-    links: Links
-    percentComplete: int
-    Status: str
-
-
-class AgentPolicyTask(BaseModel):
-    """The REST API data model for Agent Policy Task"""
-
-    agentId: str
-    links: Dict[str, Dict[str, str]]
-    taskId: str
-    taskName: str
-    taskType: str  # (enum)
-
-
-class ExecutedTask(BaseModel):
-    """The REST API data model for an executed Task"""
-
-    agentId: str
-    executingTaskId: str
-    links: Dict[str, Dict[str, str]]
-
-
-class AgentTaskState(BaseModel):
-    """The REST API data model for an agent Task's state"""
-
-    canCancel: bool
-    commandLine: str
-    endTime: datetime
-    engineId: str
-    hasArgument: bool
-    identifier: str
-    operationId: str
-    startTime: datetime
-
-
-class QueuedTask(BaseModel):
-    """The REST API data model for a Queued Task"""
-
-    agentId: str
-    executingTaskId: str
-    links: Dict[str, Dict[str, str]]
-    taskStatus: AgentTaskState
-
-
 uris = {
     "AGENTS": {
         "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents"},
         "get": {
-            "agents": {
+            "all": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents",
                 "params": [
                     {"count": {"type": int, "default": 100}},
                     {"listening": {"type": bool, "default": True}},
-                    {
-                        "name": {"type": str, "default": None},
-                        "Start": {"type": int, "default": None},
-                    },
+                    {"name": {"type": str, "default": None}},
+                    {"Start": {"type": int, "default": None}},
                 ],
-                "return": AgentDetail,  # this needs expanded into a return data class
+                "request_body": None,
+                "return": ResponseModels.AgentDetail,
             },
-            "agent": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}",
                 "params": None,
-                "return": AgentDetail,  # this needs expanded into a return data class
+                "request_body": None,
+                "return": ResponseModels.AgentDetail,
             },
             "status": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentID}/status",
                 "params": None,
-                "return": AgentStatus,  # this needs expanded into a return data class
+                "request_body": None,
+                "return": ResponseModels.AgentStatus,
             },
         },
         "put": {
-            "agent_policy": {
+            "policy": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}/policy",
                 "params": None,
-                "request_body": {"policyId": str, "checkin": bool},
-                "return": SuccessCode,
+                "request_body": RequestModels.Agents,
+                "return": ResponseModels.SuccessCode,
             }
         },
         "delete": {
-            "agent": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/{agentId}",
                 "params": None,
-                "request_body": {"policyId": str, "checkin": bool},
-                "return": SuccessCode,
+                "request_body": RequestModels.Agents,
+                "return": ResponseModels.SuccessCode,
             }
         },
         "post": None,
@@ -181,38 +61,21 @@ uris = {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment"
         },
         "get": {
-            "deployment": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/"
                 "deployment/{agentdeployment ID}",
                 "params": None,
                 "request_body": None,
-                "response": AgentDeploymentStatus,
+                "response": ResponseModels.AgentDeploymentStatus,
             }
         },
         "post": {
-            "deployment": {
+            "one": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agents/deployment",
                 "params": None,
-                "request_body": {
-                    "assignedGroup": {"required": False, "type": str},
-                    "connectionMethod": {
-                        "required": False,
-                        "type": str
-                        # this is an Enum in the REST API docs so will likely add that later
-                    },
-                    "credentialId": {"required": False, "type": str},
-                    "endPointNames": {"required": False, "type": str},
-                    "machineGroupIds": {
-                        "required": False,
-                        "type": (list, int),  # a list of ints
-                    },
-                    "policyId": {
-                        "required": True,
-                    },
-                    "sshServerValidationMode": {"required": False},
-                    "useMachineCredentialId": {"required": False},
-                },
-                "response": SuccessCode,  # links to operations in header of response...
+                "request_body": RequestModels.AgentDeployment,
+                "response": ResponseModels.SuccessCode,
+                # links to operations in header of response...
             }
         },
     },
@@ -221,25 +84,25 @@ uris = {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks"
         },
         "get": {
-            "tasks": {
+            "all": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}/tasks",
                 "params": None,
                 "request_body": None,
-                "response": AgentPolicyTask,
+                "response": ResponseModels.AgentPolicyTask,
             },
             "executedTask": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}"
                 "/queuedTask",
                 "params": None,
                 "request_body": None,
-                "response": ExecutedTask,
+                "response": ResponseModels.ExecutedTask,
             },
             "queuedTask": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttask/{agentId}"
                 "/queuedTask/{queuedTaskId}",
                 "params": None,
                 "request_body": None,
-                "response": QueuedTask,
+                "response": ResponseModels.QueuedTask,
             },
         },
         "post": {
@@ -248,14 +111,14 @@ uris = {
                 "/checkin",
                 "params": None,
                 "request_body": None,
-                "response": SuccessCode,
+                "response": ResponseModels.SuccessCode,
             },
             "taskById": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/agenttasks/{agentId}"
                 "/tasks/{taskId}",
                 "params": None,
                 "request_body": None,
-                "response": ExecutedTask,
+                "response": ResponseModels.ExecutedTask,
             },
         },
         "delete": {
@@ -264,7 +127,7 @@ uris = {
                 "/queuedTask{queuedTaskId}",
                 "params": None,
                 "request_body": None,
-                "response": SuccessCode,
+                "response": ResponseModels.SuccessCode,
             }
         },
         "put": None,
@@ -272,20 +135,197 @@ uris = {
     "Asset Scan Templates": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates"
-        }
+        },
+        "get": {
+            "templates": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates",
+                    "params": [
+                        {"count": {"type": int, "default": 10}},
+                        {
+                            "createdByMe": {"type": bool, "default": None}
+                        },  # to be depracated soon
+                        {"name": {"type": str, "default": None}},
+                        {"start": {"type": int, "default": None}},
+                    ],
+                    "request_body": None,
+                    "response": ResponseModels.ListAssetScanTemplate,
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.NotImplementedModel,
+                },
+            },
+            "UsedBy": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}/usedby",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.NotImplementedModel,
+            },
+        },
     },
     "Cloud Sync": {
-        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync"}
+        "base_url": {
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync"
+        },
+        "get": {
+            "activationKeys": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.ListAgentActivationKey,
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys{keyId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.AgentActivationKey,
+                },
+            },
+            "consoles": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles",
+                    "params": None,
+                    "request_body": None,
+                    "response": (list, ResponseModels.ConsoleInformation),
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}",
+                    "parms": None,
+                    "request_body": None,
+                    "response": ResponseModels.ConsoleInformation,
+                },
+            },
+            "policies": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies",
+                    "params": None,
+                    "request_body": None,
+                    "response": (list, ResponseModels.PolicyInformation),
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies/{policyId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.PolicyInformation,
+                },
+            },
+        },
+        "post": {
+            "activationKeys": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys",
+                "params": None,
+                "request_body": RequestModels.CloudSync,
+                "response": ResponseModels.NotImplementedModel,
+            }
+        },
+        "delete": {
+            "activationKey": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys/{keyId}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.SuccessCode,
+            }
+        },
     },
     "Configuration": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/configuration"
-        }
+        },
+        "get": {
+            "version": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/configuration/version",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.ConsoleVersions,
+            }
+        },
     },
     "Credentials": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials"
-        }
+        },
+        "get": {
+            "credentials": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials",
+                "params": {"name": {"type": str, "default": None}},
+                "request_body": None,
+                "response": (list, ResponseModels.UserCredential),
+            },
+            "credential": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credentialId}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.UserCredential,
+            },
+            "credentialShare": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/"
+                "{credential id}/share",
+                "params": None,
+                "request_body": None,
+                "response": list,
+            },
+            "serviceCrednetials": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/servicecredentials",
+                "params": None,
+                "request_body": None,
+                "response": (list, ResponseModels.ServiceCredential)
+                # ivanti docs don't say list here but most likely is
+            },
+            "serviceCredential": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/"
+                "servicecredentials/{servicecredentialId}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.ServiceCredential
+                # ivanti docs don't say list here but most likely is
+            },
+        },
+        "post": {
+            "credentials": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials",
+                "params": None,
+                "request_body": RequestModels.Credentials,
+                "response": ResponseModels.UserCredential,
+            },
+            "sessionCredentials": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/sessioncredentials",
+                "params": None,
+                "request_body": RequestModels.Password,
+                "response": ResponseModels.NotImplementedModel,  # non in ivanti docs?
+            },
+            "credentialShare": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credential id}/share",
+                "params": None,
+                "request_body": RequestModels.CredentialsShare,
+                "response": ResponseModels.UserCredential,
+            },
+            "credentialShareWithService": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/"
+                "credentials/{credential id}/sharewithservice",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
+        "put": {
+            "cedential": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credential id}",
+                "params": None,
+                "request_body": RequestModels.Credentials,
+                "response": ResponseModels.SuccessCode,
+            },
+            "credentialShare": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credential id}/share",
+                "params": None,
+                "request_body": RequestModels.CredentialsShare,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
+        "delete": {},
     },
     "distributionservers": {
         "base_url": {

@@ -1,0 +1,24 @@
+{
+    "agentId": "9BAECEF62A13EC5C919C74239EA89AF2B634C955",
+    "frameworkVersion": {
+        "major": 9,
+        "minor": 5,
+        "build": 884906,
+        "revision": -1,
+        "majorRevision": -1,
+        "minorRevision": -1
+    },
+    "installedPackages": [
+        "AGENTPATCH-REDHAT-7-X64"
+    ],
+    "lastCheckIn": "2023-07-28T09:43:56.6626574Z",
+    "links": {
+        "self": {
+            "href": "https://uwm-isec-01.uwm.local:3121/st/console/api/v1.0/agents/9BAECEF62A13EC5C919C74239EA89AF2B634C955"
+        }
+    },
+    "machineName": "uwm-rhel7-01.uwm.local",
+    "reportedOn": "2023-07-28T14:35:47.1833612Z",
+    "runningPolicyId": "82da7c90-8618-44c3-94b4-876c651bf48a",
+    "runningPolicyVersion": 158165
+}
