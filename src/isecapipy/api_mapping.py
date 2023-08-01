@@ -19,10 +19,8 @@ uris = {
                 "params": [
                     {"count": {"type": int, "default": 100}},
                     {"listening": {"type": bool, "default": True}},
-                    {
-                        "name": {"type": str, "default": None},
-                        "Start": {"type": int, "default": None},
-                    },
+                    {"name": {"type": str, "default": None}},
+                    {"Start": {"type": int, "default": None}},
                 ],
                 "request_body": None,
                 "return": ResponseModels.AgentDetail,

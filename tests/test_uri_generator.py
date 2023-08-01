@@ -1,5 +1,5 @@
 import pytest
-from isecapipy import select_uri
+from isecapipy import select_uri, NonUniqueFilter, NoURIsFound
 
 
 def test_get_agents_all():
@@ -16,6 +16,16 @@ def test_get_agents_all():
     )
 
 
-def test_raises_unable_to_determine_unique_url():
-    with pytest.raises(Exception):
+def test_raises_non_unique_url_with_no_args_or_kwargs():
+    with pytest.raises(NonUniqueFilter):
         select_uri()
+
+
+def test_raises_non_unique_url_with_arbitrary_kwargs():
+    with pytest.raises(NonUniqueFilter):
+        select_uri(fake_kwarg="some data")
+
+
+def test_raises_non_unique_url_with_count_only_in_kwargs():
+    with pytest.raises(NonUniqueFilter):
+        select_uri(count=1)
