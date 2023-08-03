@@ -16,7 +16,7 @@ Installation will soon be possible using '`pip install isecapipy`' once version 
 ```py
 import isecapipy
 
-isec = isecapipy.handler(auth_type = 'kerberos', console_fqdn = 'uwm-isec-01.uwm.local')
+isec = isecapipy.handler(auth_type = 'kerberos', console_fqdn = 'ISEC.domain.local')
 
 agents = isec.agents.get()  # returns a list of AgentDetail instances
 
