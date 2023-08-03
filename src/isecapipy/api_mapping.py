@@ -2,7 +2,6 @@
 
 from .response_models import response_models as ResponseModels
 from .request_body_models import request_body_models as RequestModels
-from typing import List
 
 
 def placeholder():
@@ -152,14 +151,16 @@ uris = {
                     "response": ResponseModels.ListAssetScanTemplate,
                 },
                 "one": {
-                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}",
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                        'asset/scantemplates/{id}",
                     "params": None,
                     "request_body": None,
                     "response": ResponseModels.NotImplementedModel,
                 },
             },
             "UsedBy": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/scantemplates/{id}/usedby",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/asset/' \
+                    'scantemplates/{id}/usedby",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.NotImplementedModel,
@@ -173,13 +174,15 @@ uris = {
         "get": {
             "activationKeys": {
                 "all": {
-                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys",
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                        'cloudsync/activationkeys",
                     "params": None,
                     "request_body": None,
                     "response": ResponseModels.ListAgentActivationKey,
                 },
                 "one": {
-                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys{keyId}",
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                        'cloudsync/activationkeys{keyId}",
                     "params": None,
                     "request_body": None,
                     "response": ResponseModels.AgentActivationKey,
@@ -193,7 +196,8 @@ uris = {
                     "response": (list, ResponseModels.ConsoleInformation),
                 },
                 "one": {
-                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}",
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                        'cloudsync/consoles/{consoleId}",
                     "parms": None,
                     "request_body": None,
                     "response": ResponseModels.ConsoleInformation,
@@ -201,13 +205,15 @@ uris = {
             },
             "policies": {
                 "all": {
-                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies",
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/' \
+                        'consoles/{consoleId}/policies",
                     "params": None,
                     "request_body": None,
                     "response": (list, ResponseModels.PolicyInformation),
                 },
                 "one": {
-                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/consoles/{consoleId}/policies/{policyId}",
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/' \
+                        'consoles/{consoleId}/policies/{policyId}",
                     "params": None,
                     "request_body": None,
                     "response": ResponseModels.PolicyInformation,
@@ -216,7 +222,8 @@ uris = {
         },
         "post": {
             "activationKeys": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                    'cloudsync/activationkeys",
                 "params": None,
                 "request_body": RequestModels.CloudSync,
                 "response": ResponseModels.NotImplementedModel,
@@ -224,7 +231,8 @@ uris = {
         },
         "delete": {
             "activationKey": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/cloudsync/activationkeys/{keyId}",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                    'cloudsync/activationkeys/{keyId}",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.SuccessCode,
@@ -256,7 +264,8 @@ uris = {
                 "response": (list, ResponseModels.UserCredential),
             },
             "credential": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credentialId}",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                    'credentials/{credentialId}",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.UserCredential,
@@ -298,7 +307,8 @@ uris = {
                 "response": ResponseModels.NotImplementedModel,  # non in ivanti docs?
             },
             "credentialShare": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credential id}/share",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
+                    'credentials/{credential id}/share",
                 "params": None,
                 "request_body": RequestModels.CredentialsShare,
                 "response": ResponseModels.UserCredential,
@@ -313,13 +323,15 @@ uris = {
         },
         "put": {
             "cedential": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credential id}",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/' \
+                    '{credential id}",
                 "params": None,
                 "request_body": RequestModels.Credentials,
                 "response": ResponseModels.SuccessCode,
             },
             "credentialShare": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credential id}/share",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/' \
+                    '{credential id}/share",
                 "params": None,
                 "request_body": RequestModels.CredentialsShare,
                 "response": ResponseModels.SuccessCode,
@@ -343,7 +355,8 @@ uris = {
     },
     "scanconfigurations": {
         "base_url": {
-            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/scanconfigurations"
+            "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations"
         }
     },
     "machinegroups": {
