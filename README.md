@@ -1,3 +1,18 @@
+> [!NOTE]
+> This project is unfinished/unmaintained.
+> It was created as part of self education shortly before my recent career pivot and I've
+> not had the time to maintain it. It is somewhat higher quality that many of the older
+> abandoned projects on my GH but there is a lot of work to do to make it functional or useful.
+> I am keeping all of my old self-education projects public for transparancy and posterity.
+> If you are interested in this project, please do reach out via an issue or similar as I would
+> consider revisiting it. I have not had the time to focus on this due to family commitments and
+> having moved away from Ivanti (I was employed by Ivanti when I started this project however it
+> is not officially associated with Ivanti in any capacty). I do still have a reasonably deep
+> understanding of the Security Controls project and if anyone wishes to collaborate on finishing
+> this project I would be keen to hear so, as collaborating on OSS is something I am interested in.
+> It is however unlikely at this time that I will revisit this project in a solo capacity due to the
+> sheer volume of other technologies I am learning as part of my current career and family duties.
+
 # ISECAPIPY
 
 ## DISCLAIMER: This project is in pre-alpha stage, end users should not attempt to implement this project in live environments!
