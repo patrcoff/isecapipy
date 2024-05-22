@@ -17,7 +17,7 @@ endpoints = []
 
 for link in links:
     href = link.get("href")
-    if href not in ["http://www.ivanti.com/en-US/company/legal", "#", None]:
+    if href not in ["https://www.ivanti.com/en-US/company/legal", "#", None]:
         # print("|"+href+"|")
         endpoints.append(href)
 output = []
@@ -35,7 +35,7 @@ for endpoint_url in endpoints:
         else:
             output.append(endpoint_base_url.strip())
     except AttributeError:
-        print("attempted item endpoint_url")
+        print(f"attempted item {endpoint_url}")
 
 with open("base_urls.txt", "w+") as f:
     for url in sorted(output, key=lambda x: x.split("v1.0/")[-1]):

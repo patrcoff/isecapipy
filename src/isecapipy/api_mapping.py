@@ -342,27 +342,181 @@ uris = {
     "distributionservers": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/distributionservers"
-        }
+        },
+        "get": {
+            "all": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/distributionservers",
+                "params": None,
+                "request_body": None,
+                "response": (list, ResponseModels.DistributionServers),
+            },
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/distributionservers/"
+                "{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.DistributionServers,
+            },
+        },
     },
     "ipranges": {
-        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/ipranges"}
+        "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/ipranges"},
+        "get": {
+            "all": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/ipranges",
+                "params": None,
+                "request_body": None,
+                "response": (list, ResponseModels.IPRange),
+            },
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/ipranges/{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.IPRange,
+            },
+        },
     },
     "deploymentconfigurations": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
             "deploymentconfigurations"
-        }
+        },
+        "get": {
+            "all": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+                "deploymentconfigurations",
+                "params": [
+                    {"createdByMe": {"type": bool, "default": None}},
+                    {"name": {"type": str, "default": None}},
+                ],
+                "request_body": None,
+                "response": (list, ResponseModels.LinuxPatchDeploymentConfiguration),
+            },
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+                "deploymentconfigurations/{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.LinuxPatchDeploymentConfiguration,
+            },
+            "usedBy": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+                "deploymentconfigurations/{id}/usedby",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.NotImplementedModel,
+            },
+        },
+        "post": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+                "deploymentconfigurations",
+                "params": None,
+                "request_body": RequestModels.LinuxDeployConfig,
+                "response": ResponseModels.LinuxPatchDeploymentConfiguration,
+            },
+        },
+        "delete": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+                "deploymentconfigurations/{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
+        "put": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/"
+                "deploymentconfigurations/{id}",
+                "params": None,
+                "request_body": RequestModels.LinuxDeployConfig,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
     },
     "scanconfigurations": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
                 'scanconfigurations"
-        }
+        },
+        "get": {
+            "all": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations",
+                "params": [
+                    {"createdByMe": {"type": bool, "default": None}},
+                    {"name": {"type": str, "default": None}},
+                ],
+                "request_body": None,
+                "response": (list, ResponseModels.LinuxPatchScanConfiguration),
+            },
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations/{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.LinuxPatchScanConfiguration,
+            },
+            "usedBy": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations/{id}/usedby",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.LinuxPatchScanConfigUsedBy,
+            },
+        },
+        "post": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations",
+                "params": None,
+                "request_body": RequestModels.LinuxPatchScanConfig,
+                "response": ResponseModels.LinuxPatchScanConfiguration,
+            },
+        },
+        "delete": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations/{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
+        "put": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/linux/patch/' \
+                'scanconfigurations/{id}",
+                "params": None,
+                "request_body": RequestModels.LinuxPatchScanConfig,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
     },
     "machinegroups": {
         "base_url": {
             "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups"
-        }
+        },
+        "get": {
+            "all": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups",
+                "params": {
+                    "count": {"type": int, "default": 10},
+                    "name": {"type": str, "default": None},
+                    "start": {"type": int, "default": None},
+                    "path": {"type": str, "default": None},
+                },
+                "request_body": None,
+                "response": (list, ResponseModels.MachineGroup),
+            },
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.MachineGroup,
+            },
+        },
     },
     "machines": {
         "base_url": {"href": "https://<consoleFQDN:port>/st/console/api/v1.0/machines"}

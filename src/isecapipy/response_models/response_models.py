@@ -384,6 +384,117 @@ class LinuxPatchMetadata(BaseModel):
 # Linux Patch Scan Configuration ------------------------------------
 
 
+class LinuxPathScanFilter(BaseModel):
+    """The REST API data model for Linux patch scan filter"""
+
+    patchGroupIds: List[int]
+    patchTypeSeverities: str  # Enum - None(0)
+    # Enum - SecurityUnassigned(1)
+    # Enum - SecurityCritical(2)
+    # Enum - SecurityImportant(4)
+    # Enum - SecurityModerate(8)
+    # Enum - SecurityLow(16)
+    # Enum - BugFix(32)
+    # Enum - Enhancement(64)
+
+
+class LinuxPatchScanConfiguration(BaseModel):
+    """The REST API data model for Linux patch scan configuration"""
+
+    createdBy: str
+    description: str
+    filter: LinuxPathScanFilter
+    id: str
+    isSystem: bool
+    links: Dict[str, Dict[str, str]]
+    name: str
+    path: str
+
+
+class LinuxPatchScanConfigUsedBy(BaseModel):
+    """The REST API data model for Linux patch scan - used by"""
+
+    name: str
+    usageType: str  # Enum
+
+
+# Machine Groups ----------------------------------------------------
+
+
+class DiscoveryFilterType(BaseModel):
+    """The REST API data model for discovery filter types"""
+
+    machineName: int
+    domain: int
+    IpAddress: int
+    IpRange: int
+    machineFile: int
+    domainFile: int
+    IpRangeFile: int
+    IpAddressFile: int
+    organizationalUnit: int
+    nestedGroup: int
+    virtualServerWildcard: int
+
+
+class DiscoveryFilters(BaseModel):
+    """The REST API data model for discovery filters"""
+
+    adminCredentialId: str
+    category: DiscoveryFilterType
+    containerCredentialId: str
+    id: int
+    IncludeChildOU: bool
+    isExcluded: bool
+    links: Dict[str, Dict[str, str]]
+    name: str
+    nestedGroupId: int
+    notes: str
+
+
+class VirtDiscoveryFilterType(DiscoveryFilterType):
+    virtualServerCenterHostedOfflineSystem: int
+    offlineDirectory: Optional[int]
+    offlineImage: Optional[int]
+
+
+class VirtualMachineDiscoveryFilter(BaseModel):
+    """The REST API data model for virtual machine discovery filters"""
+
+    adminCredentialId: str
+    category: VirtDiscoveryFilterType
+    id: int
+    InventoryPath: str
+    links: Dict[str, Dict[str, str]]
+    note: str
+    serverName: str
+
+
+class ServerFilterTypes(BaseModel):
+    workstation: int
+    server: int
+    sqlServer: int
+    domainController: int
+    printServer: int
+    iisServer: int
+
+
+class MachineGroup(BaseModel):
+    connectionMethod: str  # Enum
+    creator: str
+    credentialId: str
+    description: str
+    discoveryFilters: List[DiscoveryFilters]
+    id: str
+    isBuiltIn: bool
+    isReadOnly: bool
+    links: Dict[str, Dict[str, str]]
+    name: str
+    path: str
+    serverFilterTypes: List[ServerFilterTypes]
+    virtualMachineDiscoveryFilters: List[VirtualMachineDiscoveryFilter]
+
+
 # NOT IMPLIMENTED OR NEEDS TESTING (ISEC DOCS INCOMPLETE)
 
 

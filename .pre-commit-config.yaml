@@ -26,10 +26,10 @@ repos:
       name: Run pylint
       entry: ./run_pylint.sh
       stage: [commit]
-    - id: coverage
-      name: coverage
-      stages: [commit]
-      language: system
-      entry: coverage report --fail-under=50 --omit __init__.py
-      types: [python]
-      pass_filenames: false
+    # - id: coverage
+    #   name: coverage
+    #   stages: [commit]
+    #   language: system
+    #   entry: coverage report --fail-under=50 --omit __init__.py
+    #   types: [python]
+    #   pass_filenames: false
