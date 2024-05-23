@@ -258,17 +258,18 @@ uris = {
         },
         "get": {
             "credentials": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials",
-                "params": {"name": {"type": str, "default": None}},
-                "request_body": None,
-                "response": (list, ResponseModels.UserCredential),
-            },
-            "credential": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/' \
-                    'credentials/{credentialId}",
-                "params": None,
-                "request_body": None,
-                "response": ResponseModels.UserCredential,
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials",
+                    "params": {"name": {"type": str, "default": None}},
+                    "request_body": None,
+                    "response": (list, ResponseModels.UserCredential),
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/{credentialId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.UserCredential,
+                },
             },
             "credentialShare": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/"
@@ -504,6 +505,7 @@ uris = {
                 "params": {
                     "count": {"type": int, "default": 10},
                     "name": {"type": str, "default": None},
+                    "createdByMe": {"type": bool, "default": None},
                     "start": {"type": int, "default": None},
                     "path": {"type": str, "default": None},
                 },
@@ -515,6 +517,12 @@ uris = {
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.MachineGroup,
+            },
+            "UsedBy": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{id}/usedby",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.NotImplementedModel,
             },
         },
     },
