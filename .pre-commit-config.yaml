@@ -20,12 +20,10 @@ repos:
       language: script
       name: Run tests
       entry: ./run_test.sh
-      stage: [commit]
     - id: run_pylint
       language: script
       name: Run pylint
       entry: ./run_pylint.sh
-      stage: [commit]
     # - id: coverage
     #   name: coverage
     #   stages: [commit]
