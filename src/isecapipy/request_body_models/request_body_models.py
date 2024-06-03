@@ -188,3 +188,76 @@ class LinuxPatchScanConfig:
     filter: Optional[LinuxPatchScanFilter] = None  # required for PUT
     name: str
     path: Optional[str] = None
+
+
+# Machine Groups --------------------------------------------------------
+
+
+# Machines --------------------------------------------------------------
+
+
+class DiscoveryFilterType(BaseModel):
+    """The ENUM for the DiscoveryFilterType"""
+
+    machineName: int = None
+    domain: int = None
+    ipRange: int = None
+    ipAddress: int = None
+    machineFile: int = None
+    domainFile: int = None
+    ipRangeFile: int = None
+    ipAddressFile: int = None
+    organizationalUnit: int = None
+    nestedGroup: int = None
+    virtualServerWilcard: int = None
+
+
+class VirtDiscoveryFilterType(DiscoveryFilterType):
+    """The ENUM for the DiscoveryFilterType
+    Used in the Machines model"""
+
+    virtualServerCenterHostedOfflineSystem: int = None
+    offlineDirectory: Optional[int] = None
+    offlineImage: Optional[int] = None
+
+
+class DiscoveryFilter(BaseModel):
+    """The REST API request body for discovery filters
+    Used in the Machines model"""
+
+    adminCredentialId: Optional[str] = None
+    category: DiscoveryFilterType
+    containerCredentialId: Optional[str] = None
+    includeChildOU: Optional[bool] = None
+    isExcluded: Optional[bool] = None
+    name: str
+    notes: Optional[str] = None
+    sshServerValidationMode: Optional[
+        str
+    ] = None  # ENUM - Blocked, SkipServerAuthentication
+
+
+class ServerFilterTypes(BaseModel):
+    """The ENUM for the ServerFilterTypes
+    Used in the Machines model"""
+
+    workstation: int = None
+    server: int = None
+    sqlServer: int = None
+    domainController: int = None
+    iisServer: int = None
+
+
+class MachineGroup(BaseModel):
+    """The REST API request body for machines
+    Applies to DELETE, PUT"""
+
+    connectionMethod: Optional[str] = None  # ENUM
+    credentialId: Optional[str] = None
+    description: Optional[str] = None
+    discoveryFilters: DiscoveryFilter
+    errorPolicy: Optional[str] = None  # ENUM - Throw, Omit
+    name: str
+    path: Optional[str] = None
+    serverFilterTypes: Optional[ServerFilterTypes] = None
+    virtualMachineDiscoveryFilters: Optional[VMDiscoveryFilterType] = None

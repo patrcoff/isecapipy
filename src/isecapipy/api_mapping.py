@@ -279,19 +279,20 @@ uris = {
                 "response": list,
             },
             "serviceCrednetials": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/servicecredentials",
-                "params": None,
-                "request_body": None,
-                "response": (list, ResponseModels.ServiceCredential)
-                # ivanti docs don't say list here but most likely is
-            },
-            "serviceCredential": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/"
-                "servicecredentials/{servicecredentialId}",
-                "params": None,
-                "request_body": None,
-                "response": ResponseModels.ServiceCredential
-                # ivanti docs don't say list here but most likely is
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/servicecredentials",
+                    "params": None,
+                    "request_body": None,
+                    "response": (list, ResponseModels.ServiceCredential)
+                    # ivanti docs don't say list here but most likely is
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/servicecredentials/{servicecredentialId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.ServiceCredential
+                    # ivanti docs don't say list here but most likely is
+                },
             },
         },
         "post": {
@@ -323,7 +324,7 @@ uris = {
             },
         },
         "put": {
-            "cedential": {
+            "credential": {
                 "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/' \
                     '{credential id}",
                 "params": None,
@@ -338,7 +339,22 @@ uris = {
                 "response": ResponseModels.SuccessCode,
             },
         },
-        "delete": {},
+        "delete": {
+            "credential": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/' \
+                    '{credential id}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.SuccessCode,
+            },
+            "credentialShare": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/credentials/' \
+                    '{credential id}/share",
+                "params": None,
+                "request_body": RequestModels.CredentialsShare,
+                "response": ResponseModels.SuccessCode,
+            },
+        },
     },
     "distributionservers": {
         "base_url": {
@@ -513,16 +529,66 @@ uris = {
                 "response": (list, ResponseModels.MachineGroup),
             },
             "one": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{id}",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.MachineGroup,
             },
             "UsedBy": {
-                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{id}/usedby",
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}/usedby",
                 "params": None,
                 "request_body": None,
                 "response": ResponseModels.NotImplementedModel,
+            },
+            "discoveryFilters": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}/discoveryfilters",
+                    "params": {
+                        "adminCredentialId": {"type": str, "default": None},
+                        "containerCredentialId": {"type": str, "default": None},
+                    },
+                    "request_body": None,
+                    "response": ResponseModels.NotImplementedModel,
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}/discoveryfilters/{filterId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.NotImplementedModel,
+                },
+            },
+            "virtualMachineDiscoveryFilters": {
+                "all": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}/virtualmachinediscoveryfilters",
+                    "params": {
+                        "adminCredentialId": {"type": str, "default": None},
+                        "containerCredentialId": {"type": str, "default": None},
+                    },
+                    "request_body": None,
+                    "response": ResponseModels.NotImplementedModel,
+                },
+                "one": {
+                    "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}/virtualmachinediscoveryfilters/{filterId}",
+                    "params": None,
+                    "request_body": None,
+                    "response": ResponseModels.NotImplementedModel,
+                },
+            },
+        },
+        "post": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups",
+                "params": None,
+                "request_body": RequestModels.MachineGroup,
+                "response": ResponseModels.MachineGroup,
+            },
+        },
+        "delete": {
+            "one": {
+                "href": "https://<consoleFQDN:port>/st/console/api/v1.0/machinegroups/{groupId}",
+                "params": None,
+                "request_body": None,
+                "response": ResponseModels.SuccessCode,
             },
         },
     },
