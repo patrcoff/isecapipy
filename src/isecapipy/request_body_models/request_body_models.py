@@ -212,7 +212,7 @@ class DiscoveryFilterType(BaseModel):
     virtualServerWilcard: int = None
 
 
-class VirtDiscoveryFilterType(DiscoveryFilterType):
+class VMDiscoveryFilterType(DiscoveryFilterType):
     """The ENUM for the DiscoveryFilterType
     Used in the Machines model"""
 

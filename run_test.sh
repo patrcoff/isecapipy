@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
 if test -f "../.venv/bin/python"; then
     ../.venv/bin/python -m pytest tests
